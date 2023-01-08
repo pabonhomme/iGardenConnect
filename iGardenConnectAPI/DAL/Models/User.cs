@@ -7,13 +7,17 @@ namespace DAL.Models
 {
     public partial class User
     {
+        public User()
+        {
+            Gardens = new HashSet<Garden>();
+        }
+
         public string IdUser { get; set; }
-        public string IdGarden { get; set; }
         public string Name { get; set; }
         public string Username { get; set; }
         public string Login { get; set; }
         public string Role { get; set; }
 
-        public virtual Garden IdGardenNavigation { get; set; }
+        public virtual ICollection<Garden> Gardens { get; set; }
     }
 }

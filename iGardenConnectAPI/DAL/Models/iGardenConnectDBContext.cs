@@ -42,6 +42,11 @@ namespace DAL.Models
                     .HasColumnName("idPlant")
                     .IsFixedLength();
 
+                entity.Property(e => e.IdUser)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("idUser");
+
                 entity.Property(e => e.LastWatered)
                     .HasColumnType("datetime")
                     .HasColumnName("last_watered");
@@ -66,6 +71,11 @@ namespace DAL.Models
                     .WithMany(p => p.Gardens)
                     .HasForeignKey(d => d.IdPlant)
                     .HasConstraintName("FK__Garden__idPlant__5AEE82B9");
+
+                entity.HasOne(d => d.IdUserNavigation)
+                    .WithMany(p => p.Gardens)
+                    .HasForeignKey(d => d.IdUser)
+                    .HasConstraintName("FK__Garden__idUser__5CD6CB2B");
             });
 
             modelBuilder.Entity<GardenSensor>(entity =>
@@ -178,12 +188,6 @@ namespace DAL.Models
                     .IsUnicode(false)
                     .HasColumnName("idUser");
 
-                entity.Property(e => e.IdGarden)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("idGarden");
-
                 entity.Property(e => e.Login)
                     .HasMaxLength(100)
                     .HasColumnName("login")
@@ -203,12 +207,6 @@ namespace DAL.Models
                     .HasMaxLength(100)
                     .HasColumnName("username")
                     .IsFixedLength();
-
-                entity.HasOne(d => d.IdGardenNavigation)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.IdGarden)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ID_Garden");
             });
 
             OnModelCreatingPartial(modelBuilder);
