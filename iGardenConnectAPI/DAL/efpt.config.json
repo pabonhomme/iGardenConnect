@@ -35,7 +35,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "laptop-sgjnp1sq.iGardenConnectDB.dbo [Actualisation en cours...]",
+   "UiHint": "laptop-sgjnp1sq.iGardenConnectDB.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

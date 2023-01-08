@@ -10,7 +10,6 @@ namespace DAL.Models
         public Garden()
         {
             GardenSensors = new HashSet<GardenSensor>();
-            Plants = new HashSet<Plant>();
             Users = new HashSet<User>();
         }
 
@@ -20,9 +19,10 @@ namespace DAL.Models
         public DateTime? WateringDuration { get; set; }
         public short? Watered { get; set; }
         public DateTime? LastWatered { get; set; }
+        public string IdPlant { get; set; }
 
+        public virtual Plant IdPlantNavigation { get; set; }
         public virtual ICollection<GardenSensor> GardenSensors { get; set; }
-        public virtual ICollection<Plant> Plants { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }
 }

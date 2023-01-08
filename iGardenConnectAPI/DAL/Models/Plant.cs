@@ -7,12 +7,16 @@ namespace DAL.Models
 {
     public partial class Plant
     {
+        public Plant()
+        {
+            Gardens = new HashSet<Garden>();
+        }
+
         public string IdPlant { get; set; }
-        public string IdGarden { get; set; }
         public string Name { get; set; }
         public string Species { get; set; }
         public DateTime? WateringInterval { get; set; }
 
-        public virtual Garden IdGardenNavigation { get; set; }
+        public virtual ICollection<Garden> Gardens { get; set; }
     }
 }
