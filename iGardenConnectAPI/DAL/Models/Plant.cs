@@ -11,7 +11,7 @@ namespace DAL.Models
         public string IdGarden { get; set; }
         public string Name { get; set; }
         public string Species { get; set; }
-        public string WateringInterval { get; set; }
+        public DateTime? WateringInterval { get; set; }
 
         public virtual Garden IdGardenNavigation { get; set; }
     }
