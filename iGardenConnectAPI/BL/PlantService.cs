@@ -15,6 +15,15 @@ namespace BL
         {
             return PlantRepository.Get(dbcontext);
         }
+
+        /// <summary>
+        /// Get a plant by id
+        /// </summary>
+        /// <returns>a plantDTO</returns>
+        public static PlantDTO Get(iGardenConnectDBContext dbcontext, string id)
+        {
+            return PlantRepository.Get(dbcontext, id);
+        }
         #endregion
     }
 }

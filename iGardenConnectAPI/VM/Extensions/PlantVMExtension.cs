@@ -16,19 +16,25 @@ namespace VM.Extensions
             {
                 return new PlantVM
                 {
-                   
+                    IdPlant = dto.IdPlant,
+                    Name = dto.Name,
+                    Species = dto.Species,
+                    WateringInterval = dto.WateringInterval,
                 };
             }
             return null;
         }
 
-        public static PlantDTO ToDTO(this PlantVM entity)
+        public static PlantDTO ToDTO(this PlantVM vm)
         {
-            if (entity != null)
+            if (vm != null)
             {
                 return new PlantDTO
                 {
-                    
+                    IdPlant = vm.IdPlant,
+                    Name = vm.Name,
+                    Species = vm.Species,
+                    WateringInterval = vm.WateringInterval,
                 };
             }
 

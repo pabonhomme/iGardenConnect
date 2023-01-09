@@ -23,6 +23,19 @@ namespace DAL.Repositories
                 return _dbcontext.Plants.ToList().Select(p => p.ToDTO()).ToList();
             }
         }
+
+        
+        /// <summary>
+        /// Returns a plant with a id
+        /// </summary>
+        /// <returns>PlantDTO</returns>
+        public static PlantDTO Get(iGardenConnectDBContext dbcontext, string id)
+        {
+            using (var _dbcontext = dbcontext)
+            {
+                return _dbcontext.Plants.FirstOrDefault(p => p.IdPlant == id).ToDTO();
+            }
+        }
         #endregion
 
     }

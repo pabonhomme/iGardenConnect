@@ -20,7 +20,10 @@ namespace DAL.Extensions
 
             return new Plant
             {
-                
+                IdPlant = dto.IdPlant,
+                Name = dto.Name,
+                Species = dto.Species,
+                WateringInterval = dto.WateringInterval,
             };
         }
 
@@ -33,7 +36,10 @@ namespace DAL.Extensions
 
             return new PlantDTO
             {
-                
+                IdPlant = entity.IdPlant,
+                Name = entity.Name,
+                Species = entity.Species,
+                WateringInterval = entity.WateringInterval,
             };
         }
     }

@@ -18,13 +18,14 @@ namespace iGardenConnectAPI.Controllers
         {
             return _dbcontext;
         }
-
+        #region Get
         public PlantController(iGardenConnectDBContext dbcontext)
         {
             _dbcontext = dbcontext;
         }
 
-        [HttpGet(Name = "GetPlant")]
+        [HttpGet]
+        [Route("[action]")]
         public IEnumerable<PlantVM> Get()
         {
 
@@ -32,5 +33,16 @@ namespace iGardenConnectAPI.Controllers
 
             return plantsDTO.Select(dto => dto.ToVM());
         }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public PlantVM Get(string id)
+        {
+
+            var plantDTO = PlantService.Get(GetDbContext(), id);
+
+            return plantDTO.ToVM();
+        }
+        #endregion
     }
 }
