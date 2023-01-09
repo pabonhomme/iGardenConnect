@@ -2,6 +2,9 @@
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Net;
+using System.Resources;
 using VM;
 using VM.Extensions;
 
@@ -12,20 +15,24 @@ namespace iGardenConnectAPI.Controllers
     public class PlantController : ControllerBase
     {
 
+        #region Properties
         private static iGardenConnectDBContext _dbcontext;
 
         public static iGardenConnectDBContext GetDbContext()
         {
             return _dbcontext;
         }
-        #region Get
+        #endregion
+
+
+        #region GET
         public PlantController(iGardenConnectDBContext dbcontext)
         {
             _dbcontext = dbcontext;
         }
 
         [HttpGet]
-        [Route("[action]")]
+        [Route("")]
         public IEnumerable<PlantVM> Get()
         {
 
@@ -35,13 +42,40 @@ namespace iGardenConnectAPI.Controllers
         }
 
         [HttpGet]
-        [Route("[action]/{id}")]
+        [Route("{id}")]
         public PlantVM Get(string id)
         {
 
             var plantDTO = PlantService.Get(GetDbContext(), id);
 
             return plantDTO.ToVM();
+        }
+        #endregion
+
+        #region PUT
+        [HttpPut]
+        [Route("")]
+        public bool Put(PlantVM plantVM)
+        {
+            var state = PlantService.AddOrUpdate(GetDbContext(), plantVM.ToDTO());
+            return state;
+        }
+        #endregion
+
+        #region DELETE
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult Delete(string id)
+        {
+            var plantDTO = Get(id).ToDTO();
+
+            if (plantDTO is null)
+            {
+                return NotFound();
+            }
+
+            var state = PlantService.Remove(_dbcontext, plantDTO);
+            return Ok(state);
         }
         #endregion
     }

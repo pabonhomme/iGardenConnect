@@ -1,11 +1,16 @@
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<iGardenConnectDBContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("iGardenConnectDBConnection")));
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("iGardenConnectDBConnection"));
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+});
+    
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

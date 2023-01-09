@@ -25,5 +25,24 @@ namespace BL
             return PlantRepository.Get(dbcontext, id);
         }
         #endregion
+
+        #region PUT
+        public static bool AddOrUpdate(iGardenConnectDBContext dbcontext, PlantDTO dto)
+        {
+            return PlantRepository.AddOrUpdate(dbcontext, dto);
+        }
+        #endregion
+
+        #region DELETE
+        /// <summary>
+        /// Remove a plant
+        /// </summary>
+        /// <param name="plant"> the plant to delete</param>
+        /// <returns>Boolean indicating if the deletion went well</returns>
+        public static bool Remove(iGardenConnectDBContext dbcontext, PlantDTO plant)
+        {
+            return PlantRepository.Remove(dbcontext, plant);
+        }
+        #endregion
     }
 }
