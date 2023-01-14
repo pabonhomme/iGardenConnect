@@ -1,4 +1,5 @@
 ﻿using BL;
+using BL.Interfaces;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,32 +12,25 @@ using VM.Extensions;
 namespace iGardenConnectAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PlantController : ControllerBase
     {
-
         #region Properties
-        private static iGardenConnectDBContext _dbcontext;
+        private readonly IPlantService _plantService;
 
-        public static iGardenConnectDBContext GetDbContext()
+        public PlantController(IPlantService plantService)
         {
-            return _dbcontext;
+            _plantService = plantService;
         }
         #endregion
 
 
         #region GET
-        public PlantController(iGardenConnectDBContext dbcontext)
-        {
-            _dbcontext = dbcontext;
-        }
-
         [HttpGet]
         [Route("")]
         public IEnumerable<PlantVM> Get()
         {
-
-            var plantsDTO = PlantService.Get(GetDbContext());
+            var plantsDTO = _plantService.Get();
 
             return plantsDTO.Select(dto => dto.ToVM());
         }
@@ -45,19 +39,28 @@ namespace iGardenConnectAPI.Controllers
         [Route("{id}")]
         public PlantVM Get(string id)
         {
-
-            var plantDTO = PlantService.Get(GetDbContext(), id);
+            var plantDTO = _plantService.Get(id);
 
             return plantDTO.ToVM();
+        }
+        #endregion
+
+        #region POST
+        [HttpPost]
+        [Route("")]
+        public bool Add(PlantVM plantVM)
+        {
+            var state = _plantService.Add(plantVM.ToDTO());
+            return state;
         }
         #endregion
 
         #region PUT
         [HttpPut]
         [Route("")]
-        public bool Put(PlantVM plantVM)
+        public bool Update(PlantVM plantVM)
         {
-            var state = PlantService.AddOrUpdate(GetDbContext(), plantVM.ToDTO());
+            var state = _plantService.Update(plantVM.ToDTO());
             return state;
         }
         #endregion
@@ -74,7 +77,7 @@ namespace iGardenConnectAPI.Controllers
                 return NotFound();
             }
 
-            var state = PlantService.Remove(_dbcontext, plantDTO);
+            var state = _plantService.Remove(plantDTO);
             return Ok(state);
         }
         #endregion

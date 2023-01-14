@@ -1,35 +1,51 @@
-﻿using DAL.Models;
+﻿using BL.Interfaces;
+using DAL.Interfaces;
+using DAL.Models;
 using DAL.Repositories;
 using DTO;
 
 namespace BL
 {
-    public static class PlantService
+    public class PlantService : IPlantService
     {
+        private readonly IPlantRepositoy _plantRepository;
+
+        public PlantService(IPlantRepositoy plantRepository)
+        {
+            _plantRepository= plantRepository;
+        }
+
         #region GET
         /// <summary>
         /// Get all plants
         /// </summary>
         /// <returns>List of all plants</returns>
-        public static IEnumerable<PlantDTO> Get(iGardenConnectDBContext dbcontext)
+        public IEnumerable<PlantDTO> Get()
         {
-            return PlantRepository.Get(dbcontext);
+            return _plantRepository.Get();
         }
 
         /// <summary>
         /// Get a plant by id
         /// </summary>
         /// <returns>a plantDTO</returns>
-        public static PlantDTO Get(iGardenConnectDBContext dbcontext, string id)
+        public PlantDTO Get(string id)
         {
-            return PlantRepository.Get(dbcontext, id);
+            return _plantRepository.Get(id);
+        }
+        #endregion
+
+        #region POST
+        public bool Add(PlantDTO dto)
+        {
+            return _plantRepository.Add(dto);
         }
         #endregion
 
         #region PUT
-        public static bool AddOrUpdate(iGardenConnectDBContext dbcontext, PlantDTO dto)
+        public bool Update(PlantDTO dto)
         {
-            return PlantRepository.AddOrUpdate(dbcontext, dto);
+            return _plantRepository.Update(dto);
         }
         #endregion
 
@@ -39,9 +55,9 @@ namespace BL
         /// </summary>
         /// <param name="plant"> the plant to delete</param>
         /// <returns>Boolean indicating if the deletion went well</returns>
-        public static bool Remove(iGardenConnectDBContext dbcontext, PlantDTO plant)
+        public bool Remove(PlantDTO plant)
         {
-            return PlantRepository.Remove(dbcontext, plant);
+            return _plantRepository.Remove(plant);
         }
         #endregion
     }
