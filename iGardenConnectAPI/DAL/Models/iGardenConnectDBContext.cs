@@ -37,15 +37,9 @@ namespace DAL.Models
                     .IsUnicode(false)
                     .HasColumnName("idGarden");
 
-                entity.Property(e => e.IdPlant)
-                    .HasMaxLength(100)
-                    .HasColumnName("idPlant")
-                    .IsFixedLength();
+                entity.Property(e => e.IdPlant).HasColumnName("idPlant");
 
-                entity.Property(e => e.IdUser)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("idUser");
+                entity.Property(e => e.IdUser).HasColumnName("idUser");
 
                 entity.Property(e => e.LastWatered)
                     .HasColumnType("datetime")
@@ -70,12 +64,12 @@ namespace DAL.Models
                 entity.HasOne(d => d.IdPlantNavigation)
                     .WithMany(p => p.Gardens)
                     .HasForeignKey(d => d.IdPlant)
-                    .HasConstraintName("FK__Garden__idPlant__5AEE82B9");
+                    .HasConstraintName("FK__Garden__idPlant__2C3393D0");
 
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Gardens)
                     .HasForeignKey(d => d.IdUser)
-                    .HasConstraintName("FK__Garden__idUser__5CD6CB2B");
+                    .HasConstraintName("FK__Garden__idUser__2D27B809");
             });
 
             modelBuilder.Entity<GardenSensor>(entity =>
@@ -89,10 +83,7 @@ namespace DAL.Models
                     .IsUnicode(false)
                     .HasColumnName("idGarden");
 
-                entity.Property(e => e.IdSensor)
-                    .HasMaxLength(100)
-                    .HasColumnName("idSensor")
-                    .IsFixedLength();
+                entity.Property(e => e.IdSensor).HasColumnName("idSensor");
 
                 entity.Property(e => e.State)
                     .HasMaxLength(100)
@@ -123,10 +114,7 @@ namespace DAL.Models
 
                 entity.ToTable("Plant");
 
-                entity.Property(e => e.IdPlant)
-                    .HasMaxLength(100)
-                    .HasColumnName("idPlant")
-                    .IsFixedLength();
+                entity.Property(e => e.IdPlant).HasColumnName("idPlant");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
@@ -150,10 +138,7 @@ namespace DAL.Models
 
                 entity.ToTable("Sensor");
 
-                entity.Property(e => e.IdSensor)
-                    .HasMaxLength(100)
-                    .HasColumnName("idSensor")
-                    .IsFixedLength();
+                entity.Property(e => e.IdSensor).HasColumnName("idSensor");
 
                 entity.Property(e => e.Brand)
                     .HasMaxLength(100)
@@ -183,10 +168,7 @@ namespace DAL.Models
 
                 entity.ToTable("User");
 
-                entity.Property(e => e.IdUser)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("idUser");
+                entity.Property(e => e.IdUser).HasColumnName("idUser");
 
                 entity.Property(e => e.Login)
                     .HasMaxLength(100)

@@ -37,7 +37,7 @@ namespace DAL.Repositories
         /// Returns a plant with a id
         /// </summary>
         /// <returns>PlantDTO</returns>
-        public PlantDTO Get(string id)
+        public PlantDTO Get(int id)
         {
             
              return _dbcontext.Plants.FirstOrDefault(p => p.IdPlant == id).ToDTO();

@@ -12,7 +12,7 @@ namespace DAL.Models
             Gardens = new HashSet<Garden>();
         }
 
-        public string IdUser { get; set; }
+        public int IdUser { get; set; }
         public string Name { get; set; }
         public string Username { get; set; }
         public string Login { get; set; }

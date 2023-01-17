@@ -18,8 +18,8 @@ namespace DAL.Models
         public DateTime? WateringDuration { get; set; }
         public short? Watered { get; set; }
         public DateTime? LastWatered { get; set; }
-        public string IdPlant { get; set; }
-        public string IdUser { get; set; }
+        public int? IdPlant { get; set; }
+        public int? IdUser { get; set; }
 
         public virtual Plant IdPlantNavigation { get; set; }
         public virtual User IdUserNavigation { get; set; }

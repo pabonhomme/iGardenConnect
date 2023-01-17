@@ -8,7 +8,7 @@ namespace DAL.Models
     public partial class GardenSensor
     {
         public string IdGarden { get; set; }
-        public string IdSensor { get; set; }
+        public int IdSensor { get; set; }
         public string Value { get; set; }
         public string State { get; set; }
 

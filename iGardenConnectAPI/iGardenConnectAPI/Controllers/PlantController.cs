@@ -36,7 +36,7 @@ namespace iGardenConnectAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public PlantVM Get(string id)
+        public PlantVM Get(int id)
         {
             var plantDTO = _plantService.Get(id);
 
@@ -68,7 +68,7 @@ namespace iGardenConnectAPI.Controllers
         #region DELETE
         [HttpDelete]
         [Route("{id}")]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             var plantDTO = Get(id).ToDTO();
 

@@ -29,7 +29,7 @@ namespace BL
         /// Get a plant by id
         /// </summary>
         /// <returns>a plantDTO</returns>
-        public PlantDTO Get(string id)
+        public PlantDTO Get(int id)
         {
             return _plantRepository.Get(id);
         }
