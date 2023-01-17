@@ -24,8 +24,7 @@ namespace iGardenConnectAPI.Controllers
         }
         #endregion
 
-
-        #region GET
+#region GET
         [HttpGet]
         [Route("")]
         public IEnumerable<PlantVM> Get()
@@ -44,6 +43,7 @@ namespace iGardenConnectAPI.Controllers
             return plantDTO.ToVM();
         }
         #endregion
+        
 
         #region POST
         [HttpPost]

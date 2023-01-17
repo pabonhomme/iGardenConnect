@@ -45,7 +45,7 @@ namespace DAL.Repositories
         }
         #endregion
 
-        #region PUT
+        #region POST
         /// <summary>
         /// Add a plant into the database
         /// </summary>
