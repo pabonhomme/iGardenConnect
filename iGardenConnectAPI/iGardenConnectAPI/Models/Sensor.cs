@@ -12,7 +12,7 @@ namespace iGardenConnectAPI.Models
             GardenSensor = new HashSet<GardenSensor>();
         }
 
-        public string IdSensor { get; set; }
+        public int IdSensor { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Brand { get; set; }

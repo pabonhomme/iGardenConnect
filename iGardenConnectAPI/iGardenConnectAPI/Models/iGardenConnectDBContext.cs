@@ -35,15 +35,9 @@ namespace iGardenConnectAPI.Models
                     .IsUnicode(false)
                     .HasColumnName("idGarden");
 
-                entity.Property(e => e.IdPlant)
-                    .HasMaxLength(100)
-                    .HasColumnName("idPlant")
-                    .IsFixedLength();
+                entity.Property(e => e.IdPlant).HasColumnName("idPlant");
 
-                entity.Property(e => e.IdUser)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("idUser");
+                entity.Property(e => e.IdUser).HasColumnName("idUser");
 
                 entity.Property(e => e.LastWatered)
                     .HasColumnType("datetime")
@@ -68,12 +62,12 @@ namespace iGardenConnectAPI.Models
                 entity.HasOne(d => d.IdPlantNavigation)
                     .WithMany(p => p.Garden)
                     .HasForeignKey(d => d.IdPlant)
-                    .HasConstraintName("FK__Garden__idPlant__5AEE82B9");
+                    .HasConstraintName("FK__Garden__idPlant__2C3393D0");
 
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Garden)
                     .HasForeignKey(d => d.IdUser)
-                    .HasConstraintName("FK__Garden__idUser__5CD6CB2B");
+                    .HasConstraintName("FK__Garden__idUser__2D27B809");
             });
 
             modelBuilder.Entity<GardenSensor>(entity =>
@@ -85,10 +79,7 @@ namespace iGardenConnectAPI.Models
                     .IsUnicode(false)
                     .HasColumnName("idGarden");
 
-                entity.Property(e => e.IdSensor)
-                    .HasMaxLength(100)
-                    .HasColumnName("idSensor")
-                    .IsFixedLength();
+                entity.Property(e => e.IdSensor).HasColumnName("idSensor");
 
                 entity.Property(e => e.State)
                     .HasMaxLength(100)
@@ -117,10 +108,7 @@ namespace iGardenConnectAPI.Models
             {
                 entity.HasKey(e => e.IdPlant);
 
-                entity.Property(e => e.IdPlant)
-                    .HasMaxLength(100)
-                    .HasColumnName("idPlant")
-                    .IsFixedLength();
+                entity.Property(e => e.IdPlant).HasColumnName("idPlant");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
@@ -142,10 +130,7 @@ namespace iGardenConnectAPI.Models
                 entity.HasKey(e => e.IdSensor)
                     .HasName("PK_sensor");
 
-                entity.Property(e => e.IdSensor)
-                    .HasMaxLength(100)
-                    .HasColumnName("idSensor")
-                    .IsFixedLength();
+                entity.Property(e => e.IdSensor).HasColumnName("idSensor");
 
                 entity.Property(e => e.Brand)
                     .HasMaxLength(100)
@@ -173,10 +158,7 @@ namespace iGardenConnectAPI.Models
                 entity.HasKey(e => e.IdUser)
                     .HasName("PK_Users");
 
-                entity.Property(e => e.IdUser)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("idUser");
+                entity.Property(e => e.IdUser).HasColumnName("idUser");
 
                 entity.Property(e => e.Login)
                     .HasMaxLength(100)
