@@ -2,7 +2,7 @@
 {
     public class SensorDTO
     {
-        public string Reference { get; set; }
+        public int Reference { get; set; }
 
         public string Name { get; set; }
 
