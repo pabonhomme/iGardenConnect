@@ -6,13 +6,13 @@ void setup() {
 }
 void loop() {
   soilMoistureValue = analogRead(A0);  //put Sensor insert into soil
-  if(soilMoistureValue > 380 )
+  if(soilMoistureValue > 500 )
   {
     Serial.println("Dry");
     digitalWrite(relay_2, HIGH);
     Serial.println("All relays ON");    
   }
-    else if(soilMoistureValue <380 )
+    else if(soilMoistureValue <500 )
     {
       Serial.println("Wet");
       digitalWrite(relay_2, LOW);
