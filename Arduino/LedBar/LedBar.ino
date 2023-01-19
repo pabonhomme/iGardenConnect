@@ -11,7 +11,6 @@ void setup()
  
 void loop()
 {
- 
   int value = analogRead(A0);
   value = map(value, 0, 800, 0, 10);
   bar.setLevel(value);
