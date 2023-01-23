@@ -1,5 +1,7 @@
 #include <FastLED.h>
 #include <Grove_LED_Bar.h>
+//nivdeau
+#include <Wire.h>
 
 // How many leds in your strip?
 #define NUM_LEDS1 166
@@ -13,11 +15,98 @@ int relay_4 = 12;
 CRGB leds1[NUM_LEDS1];
 CRGB leds2[NUM_LEDS2];
 //light sensor
-Grove_LED_Bar bar(3, 2, 0, 10);
+Grove_LED_Bar bar(3, 2, 0,10);
 
 //soil
 int relay_2 = 7;
 int soilMoistureValue = 0;
+
+//nivdeau
+#ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
+#define SERIAL SerialUSB
+#else
+#define SERIAL Serial
+#endif
+ 
+unsigned char low_data[8] = {0};
+unsigned char high_data[12] = {0};
+ 
+ 
+#define NO_TOUCH       0xFE
+#define THRESHOLD      100
+#define ATTINY1_HIGH_ADDR   0x78
+#define ATTINY2_LOW_ADDR   0x77
+
+//fonctions nivdeau
+void getHigh12SectionValue(void)
+{
+  memset(high_data, 0, sizeof(high_data));
+  Wire.requestFrom(ATTINY1_HIGH_ADDR, 12);
+  while (12 != Wire.available());
+ 
+  for (int i = 0; i < 12; i++) {
+    high_data[i] = Wire.read();
+  }
+  delay(10);
+}
+ 
+void getLow8SectionValue(void)
+{
+  memset(low_data, 0, sizeof(low_data));
+  Wire.requestFrom(ATTINY2_LOW_ADDR, 8);
+  while (8 != Wire.available());
+ 
+  for (int i = 0; i < 8 ; i++) {
+    low_data[i] = Wire.read(); // receive a byte as character
+  }
+  delay(10);
+}
+ 
+void check()
+{
+  int sensorvalue_min = 250;
+  int sensorvalue_max = 255;
+  int low_count = 0;
+  int high_count = 0;
+ 
+    uint32_t touch_val = 0;
+    uint8_t trig_section = 0;
+    low_count = 0;
+    high_count = 0;
+    getLow8SectionValue();
+    getHigh12SectionValue();
+
+ 
+    Serial.println("  ");
+    Serial.println("  ");
+ 
+    for (int i = 0 ; i < 8; i++) {
+      if (low_data[i] > THRESHOLD) {
+        touch_val |= 1 << i;
+ 
+      }
+    }
+    for (int i = 0 ; i < 12; i++) {
+      if (high_data[i] > THRESHOLD) {
+        touch_val |= (uint32_t)1 << (8 + i);
+      }
+    }
+ 
+    while (touch_val & 0x01)
+    {
+      trig_section++;
+      touch_val >>= 1;
+    }
+    SERIAL.print("water level = ");
+    SERIAL.print(trig_section * 5);
+    SERIAL.println("% ");
+    SERIAL.println(" ");
+    SERIAL.println("*********************************************************");
+    delay(1000);
+  
+}//fin fonctions nivdeau
+
+
 
 void setup() {
   Serial.begin(9600); // open serial port, set the baud rate to 9600 bps
@@ -27,7 +116,8 @@ void setup() {
   pinMode(relay_3, OUTPUT);
   pinMode(relay_4, OUTPUT);
   FastLED.addLeds<NEOPIXEL, DATA_PIN1>(leds1, NUM_LEDS1); 
-  FastLED.addLeds<NEOPIXEL, DATA_PIN2>(leds2, NUM_LEDS2); 
+  FastLED.addLeds<NEOPIXEL, DATA_PIN2>(leds2, NUM_LEDS2);
+  Wire.begin();
 }
 void loop() {
   soilMoistureValue = analogRead(A4);  //put Sensor insert into soil
@@ -77,4 +167,5 @@ void loop() {
     digitalWrite(relay_3, LOW);
     digitalWrite(relay_4, LOW);
   }
+  check();
   }
