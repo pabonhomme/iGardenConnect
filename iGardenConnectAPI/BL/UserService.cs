@@ -20,9 +20,8 @@ namespace BL
 
         public bool Add(UserDTO dto)
         {
-            throw new NotImplementedException();
+            return _userRepository.Add(dto);
         }
-
 
         #region GET
         /// <summary>
@@ -36,17 +35,17 @@ namespace BL
 
         public UserDTO Get(int id)
         {
-            throw new NotImplementedException();
+            return _userRepository.Get(id);
         }
 
         public bool Remove(UserDTO user)
         {
-            throw new NotImplementedException();
+            return _userRepository.Remove(user);
         }
 
-        public bool Update(UserDTO USERDTO)
+        public bool Update(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            return _userRepository.Update(userDTO);
         }
         #endregion
     }

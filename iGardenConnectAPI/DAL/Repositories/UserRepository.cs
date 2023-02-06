@@ -2,6 +2,7 @@
 using DAL.Interfaces;
 using DAL.Models;
 using DTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,22 @@ namespace DAL.Repositories
             _dbcontext = dbcontext;
         }
 
-        public bool Add(UserDTO dto)
+        public bool Add(UserDTO userdto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = userdto.ToEntity();
+                _dbcontext.Add(entity);
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
 
         #region GET
@@ -37,17 +51,50 @@ namespace DAL.Repositories
 
         public UserDTO Get(int id)
         {
-            throw new NotImplementedException();
+            return _dbcontext.Users.FirstOrDefault(p => p.IdUser == id).ToDTO();
         }
 
         public bool Remove(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = userDTO.ToEntity();
+
+                if (_dbcontext.Entry(entity).State == EntityState.Detached)
+                {
+                    _dbcontext.Entry(entity).State = EntityState.Modified;
+                }
+
+                _dbcontext.Users.Remove(entity);
+
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
 
         public bool Update(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = userDTO.ToEntity();
+                _dbcontext.Update(entity);
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
 
         #endregion
