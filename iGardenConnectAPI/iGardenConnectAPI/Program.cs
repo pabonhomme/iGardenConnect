@@ -23,6 +23,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 
+builder.Services.AddScoped<IGardenRepository, GardenRepository>();
+builder.Services.AddScoped<IGardenService, GardenService >();
+
+
 
 
 
