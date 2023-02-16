@@ -65,8 +65,7 @@ void check()
   int sensorvalue_max = 255;
   int low_count = 0;
   int high_count = 0;
-  while (1)
-  {
+  
     uint32_t touch_val = 0;
     uint8_t trig_section = 0;
     low_count = 0;
@@ -134,7 +133,6 @@ void check()
     SERIAL.println(" ");
     SERIAL.println("*********************************************************");
     delay(1000);
-  }
 }
 
 
@@ -152,14 +150,15 @@ void setup() {
 }
 void loop() {
   soilMoistureValue = analogRead(A4);  //put Sensor insert into soil
-  if(soilMoistureValue > 500 )
+  Serial.println(soilMoistureValue);
+  if(soilMoistureValue > 515 )
   {
     Serial.println("Dry");
     Serial.println(soilMoistureValue);
     digitalWrite(relay_2, HIGH);
     Serial.println("All relays ON");    
   }
-  else if(soilMoistureValue <500 )
+  else if(soilMoistureValue <515 )
   {
     Serial.println("Wet");
     digitalWrite(relay_2, LOW);
