@@ -53,11 +53,11 @@ namespace DAL.Extensions
                 LastWatered = entity.LastWatered,
                 IdPlant = entity.IdPlant,
                 IdUser = entity.IdUser,
-                GardenSensors = new List<SensorDTO>(),
+                GardenSensors = new List<GardenSensorDTO>(),
 
         };
         }
-        public static GardenDTO ToDTO(this Garden entity, ISensorRepository isensorRepo)
+        public static GardenDTO ToDTO(this Garden entity)
         {
             if (entity is null)
             {
@@ -65,7 +65,6 @@ namespace DAL.Extensions
             }
 
             var dto = ToSmallDTO(entity);
-             dto.GardenSensors = isensorRepo.Get()
             return dto;
         }
     }

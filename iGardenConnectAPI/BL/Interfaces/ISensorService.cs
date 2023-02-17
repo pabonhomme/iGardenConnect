@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interfaces
+namespace BL.Interfaces
 {
-    public interface ISensorRepository
+    public interface ISensorService
     {
         public IEnumerable<SensorDTO> Get();
         public SensorDTO Get(int id);
@@ -16,4 +16,5 @@ namespace DAL.Interfaces
         public bool Update(SensorDTO dto);
 
     }
+
 }

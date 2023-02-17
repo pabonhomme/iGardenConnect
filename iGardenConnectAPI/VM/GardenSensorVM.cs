@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTO
+namespace VM
 {
-    public class GardenDTO : SmallGardenDTO
+    public class GardenSensorVM : SensorVM
     {
-        public virtual IEnumerable<GardenSensorDTO> GardenSensors { get; set; }
+        public string? Value { get; set; }
+        public string? State { get; set; }
     }
 }

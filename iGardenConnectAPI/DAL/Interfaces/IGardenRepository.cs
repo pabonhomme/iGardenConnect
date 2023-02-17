@@ -12,8 +12,8 @@ namespace DAL.Interfaces
         public IEnumerable<GardenSensorDTO> GetGardenSensors(string idGarden);
 
         public IEnumerable<GardenDTO> Get();
-        public GardenDTO Get(int id);
-        public bool Add(GardenDTO dto);
+        public GardenDTO Get(string id);
+        public bool Add(GardenDTO dto, int idUser, int idPlant);
         public bool Update(GardenDTO gardenDTO);
         public bool Remove(GardenDTO garden);
     }

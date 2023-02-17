@@ -2,6 +2,7 @@
 using DAL.Interfaces;
 using DAL.Models;
 using DAL.Extensions;
+using System.Linq;
 
 namespace DAL.Repositories
 {
@@ -13,10 +14,6 @@ namespace DAL.Repositories
         {
             _dbcontext = dbcontext;
         }
-        public bool Add(SensorDTO dto)
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<SensorDTO> Get()
         {
@@ -25,17 +22,53 @@ namespace DAL.Repositories
 
         public SensorDTO Get(int id)
         {
-            throw new NotImplementedException();
+            return _dbcontext.Sensors.FirstOrDefault(s => s.IdSensor == id).ToDTO();
         }
 
-        public bool Remove(SensorDTO sensorDTO)
+
+        #region POST
+        /// <summary>
+        /// Add a sensor into the database
+        /// </summary>
+        /// <param name="SensorDTO">sensor to add in the database</param>
+        /// <returns>if the add went well</returns>
+        public bool Add(SensorDTO sensorDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = sensorDTO.ToEntity(0);
+                _dbcontext.Add(entity);
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
+        #endregion
 
         public bool Update(SensorDTO sensorDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = sensorDTO.ToEntity(1);
+                _dbcontext.Update(entity);
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
+
+
     }
 }

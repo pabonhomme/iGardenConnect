@@ -15,6 +15,9 @@ builder.Services.AddDbContext<iGardenConnectDBContext>(options =>
     options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
 
+builder.Services.AddScoped<ISensorRepository, SensorRepository>();
+builder.Services.AddScoped<ISensorService, SensorService>();
+
 builder.Services.AddScoped<IPlantRepositoy, PlantRepository>();
 builder.Services.AddScoped<IPlantService, PlantService>();
 
@@ -25,6 +28,11 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IGardenRepository, GardenRepository>();
 builder.Services.AddScoped<IGardenService, GardenService >();
+
+builder.Services.AddScoped<IGardenSensorRepository, GardenSensorRepository>();
+builder.Services.AddScoped<IGardenSensorService, GardenSensorService>();
+
+
 
 
 

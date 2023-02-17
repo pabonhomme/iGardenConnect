@@ -10,8 +10,9 @@ namespace BL.Interfaces
     public interface IGardenService
     {
         public IEnumerable<GardenDTO> Get();
-        public GardenDTO Get(int id);
-        public bool Add(GardenDTO dto);
+
+        public GardenDTO Get(string id);
+        public bool Add(GardenDTO gardenDTO, int idUser, int idPlant);
         public bool Update(GardenDTO plantDTO);
         public bool Remove(GardenDTO plant);
     }

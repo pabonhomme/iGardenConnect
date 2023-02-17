@@ -9,6 +9,7 @@ using BL.Interfaces;
 using DAL.Models;
 using VM;
 using VM.Extensions;
+using DTO;
 
 namespace iGardenConnectAPI.Controllers
 {
@@ -38,7 +39,7 @@ namespace iGardenConnectAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public GardenVM Get(int id)
+        public GardenVM Get(string id)
         {
             var gardenDTO = _GardenService.Get(id);
 
@@ -48,10 +49,11 @@ namespace iGardenConnectAPI.Controllers
 
         #region POST
         [HttpPost]
-        [Route("")]
-        public bool Add(GardenVM gardenVM)
+        [Route("{idUser}/{idPlant}")]
+        public bool Add(GardenVM gardenVM, int idUser, int idPlant)
         {
-            var state = _GardenService.Add(gardenVM.ToDTO());
+            var gardenDTO = gardenVM.ToDTO();
+            var state = _GardenService.Add(gardenDTO, idUser, idPlant);
             return state;
         }
         #endregion

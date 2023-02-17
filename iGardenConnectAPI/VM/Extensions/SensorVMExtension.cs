@@ -15,7 +15,7 @@ namespace VM.Extensions
             {
                 return new SensorVM
                 {
-                    IdSensor = dto.Reference,
+                    IdSensor = dto.IdSensor,
                     Name = dto.Name,
                     Type = dto.Type,
                     Brand = dto.Brand, 
@@ -31,7 +31,7 @@ namespace VM.Extensions
             {
                 return new SensorDTO
                 {
-                    Reference = vm.IdSensor,
+                    IdSensor = (int)vm.IdSensor,
                     Name = vm.Name,
                     Type = vm.Type,
                     Brand = vm.Brand,

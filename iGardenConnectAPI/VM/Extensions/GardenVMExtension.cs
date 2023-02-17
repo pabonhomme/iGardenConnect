@@ -23,7 +23,7 @@ namespace VM.Extensions
                     LastWatered = dto.LastWatered,
                     IdPlant = dto.IdPlant,
                     IdUser = dto.IdUser,
-                    GardenSensors = (ICollection<SensorVM>)(dto.GardenSensors == null || dto.GardenSensors.Count() == 0 ? new List<SensorVM>() : dto.GardenSensors.Select(s => s.ToVM()).ToList()),
+                    GardenSensors = (dto.GardenSensors == null || dto.GardenSensors.Count() == 0 ? new List<GardenSensorVM>() : dto.GardenSensors.Select(s => s.ToVM()).ToList()),
 
                 };
             }
@@ -44,7 +44,7 @@ namespace VM.Extensions
                     LastWatered = vm.LastWatered,
                     IdPlant = vm.IdPlant,
                     IdUser = vm.IdUser,
-                    GardenSensors = vm.GardenSensors == null || vm.GardenSensors.Count() == 0 ? new List<SensorDTO>() : vm.GardenSensors.Select(s => s.ToDTO()).ToList(),
+                    GardenSensors = vm.GardenSensors == null || vm.GardenSensors.Count() == 0 ? new List<GardenSensorDTO>() : vm.GardenSensors.Select(s => s.ToDTO()).ToList(),
                 };
             }
 

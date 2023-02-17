@@ -1,4 +1,5 @@
-﻿using DAL.Interfaces;
+﻿using DAL.Extensions;
+using DAL.Interfaces;
 using DAL.Models;
 using DTO;
 using System;
@@ -17,9 +18,24 @@ namespace DAL.Repositories
         {
             _dbcontext = dbcontext;
         }
-        public bool Add(GardenDTO dto)
+        public bool Add(GardenDTO dto, int idUser, int idPlant)
         {
-            throw new NotImplementedException();
+            try { 
+                dto.IdUser = idUser;
+                dto.IdPlant = idPlant;
+
+                var entity = dto.ToEntity();
+                _dbcontext.Add(entity);
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
 
         //public static IEnumerable<GardenSensorDTO> GetGardenSensors(string idGarden)
@@ -29,17 +45,19 @@ namespace DAL.Repositories
         //}
         public IEnumerable<GardenDTO> Get()
         {
-            throw new NotImplementedException();
+
+            return _dbcontext.Gardens.ToList().Select(g => g.ToSmallDTO()).ToList();
         }
 
-        public GardenDTO Get(int id)
+        public GardenDTO Get(string id)
         {
-            throw new NotImplementedException();
+            return _dbcontext.Gardens.FirstOrDefault(g => g.IdGarden == id).ToDTO();
+
         }
 
         public IEnumerable<GardenSensorDTO> GetGardenSensors(string idGarden)
         {
-            throw new NotImplementedException();
+            return _dbcontext.GardenSensors.ToList().Where(s => s.IdGarden == idGarden).ToList().Select(s => s.ToDTO()).ToList();
         }
 
         public bool Remove(GardenDTO garden)

@@ -10,21 +10,27 @@ namespace DAL.Extensions
 {
     public static class SensorExtension
     {
-        public static Sensor ToEntity(this SensorDTO dto)
+        public static Sensor ToEntity(this SensorDTO dto, int action)
         {
             if (dto is null)
             {
                 return null;
             }
 
-            return new Sensor
+            var sensor = new Sensor()
             {
-                IdSensor = dto.Reference,
+                
                 Name = dto.Name,
                 Type = dto.Type,
                 Brand = dto.Brand,
                 Price = dto.Price,
             };
+            if(action == 1) //if update
+            {
+                sensor.IdSensor = dto.IdSensor;
+
+            }
+            return sensor;
         }
         public static SensorDTO ToDTO(this Sensor entity)
         {
@@ -35,7 +41,7 @@ namespace DAL.Extensions
 
             return new SensorDTO
             {
-                Reference = entity.IdSensor,
+                IdSensor = (int)entity.IdSensor,
                 Name = entity.Name,
                 Type = entity.Type,
                 Brand = entity.Brand,
