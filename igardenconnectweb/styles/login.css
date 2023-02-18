@@ -31,6 +31,15 @@ h2 {
     border: 1px solid black !important;
 }
 
-.submit-button {
+.submit-button-createAccount,
+.submit-button-connexion {
     margin-top: 10px;
+    width: 120px !important;
+    white-space: nowrap;
+}
+
+.submit-button-createAccount-connexion{
+    font-size: 10px !important;
+    width: auto !important;
+    white-space: nowrap;
 }

@@ -69,7 +69,7 @@ export default function CreateAccount() {
               />
             </Form.Group>
 
-            <Button className="submit-button bg-secondary" type="submit">
+            <Button className="submit-button-createAccount bg-secondary" type="submit">
               Valider
             </Button>
           </Form>

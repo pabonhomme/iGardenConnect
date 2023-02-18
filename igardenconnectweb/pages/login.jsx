@@ -1,14 +1,12 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent } from "react";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
+import Link from "next/link";
 
-import { useState } from 'react';
+import { useState } from "react";
 import CustomNavbar from "./components/CustomNavbar";
 import CustomHeader from "./components/CustomHeader";
-import {
-    Form,
-    Button,
-  } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 
 export default function Login() {
   let username = "";
@@ -43,9 +41,7 @@ export default function Login() {
     //   username: username,
     //   passwd: password,
     // };
-
     // setLoading(true);
-
     // fetch("http://localhost:8001/api/users/login", {
     //   method: "POST",
     //   headers: {
@@ -67,21 +63,21 @@ export default function Login() {
     //   });
   }
 
-//   if (loading) {
-//     return (
-//       <>
-//         <div className="loading-container">
-//           <div className="lds-dual-ring"></div>
-//           <div className="loading">Loading...</div>
-//           <div className="error" id="error"></div>
-//         </div>
-//       </>
-//     );
-//   }
+  //   if (loading) {
+  //     return (
+  //       <>
+  //         <div className="loading-container">
+  //           <div className="lds-dual-ring"></div>
+  //           <div className="loading">Loading...</div>
+  //           <div className="error" id="error"></div>
+  //         </div>
+  //       </>
+  //     );
+  //   }
 
   return (
     <>
-      <CustomHeader/>
+      <CustomHeader />
       <main className={styles.main}>
         <header>
           <CustomNavbar />
@@ -91,7 +87,9 @@ export default function Login() {
           <h2>Se connecter</h2>
           <Form className="form-login" onSubmit={onsubmit}>
             <Form.Group className="mb-3" controlId="formBasicUsername">
-              <Form.Label className="login-text">Entrer votre email :</Form.Label>
+              <Form.Label className="login-text">
+                Entrer votre email :
+              </Form.Label>
               <Form.Control
                 className="inputText"
                 type="email"
@@ -101,7 +99,9 @@ export default function Login() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label className="login-text">Entrer votre mot de passe :</Form.Label>
+              <Form.Label className="login-text">
+                Entrer votre mot de passe :
+              </Form.Label>
               <Form.Control
                 className="inputText"
                 type="password"
@@ -110,11 +110,22 @@ export default function Login() {
               />
             </Form.Group>
 
-            <Button className="submit-button bg-secondary" type="submit">
+            <Button
+              className="submit-button-connexion bg-secondary"
+              type="submit"
+            >
               Se connecter
             </Button>
             <p id="error" style={{ color: "red" }}></p>
           </Form>
+          <Container className="mt-4">
+            <h6>Pas encore de compte ?</h6>
+            <Link href="/createAccount">
+                <Button className="submit-button-createAccount-connexion bg-secondary">
+                  Créer un compte
+                </Button>
+            </Link>
+          </Container>
         </div>
       </main>
     </>

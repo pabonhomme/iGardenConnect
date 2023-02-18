@@ -155,7 +155,7 @@ export default function Gardens() {
               </Col>
             </Row>
           </Container>
-          <Button className="submit-button bg-secondary" type="submit">
+          <Button className="submit-button-gardens bg-secondary" type="submit">
             Ajouter un jardin
           </Button>
         </Container>

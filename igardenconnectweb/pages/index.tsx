@@ -37,8 +37,8 @@ export default function Home() {
           </p>
         </div>
 
-        <div className={styles.containerGarden}>
-        <Image className={styles.garden} src="/jardin.jpg" alt="jardin" width="700" height="700"/>
+        <div className="containerGarden">
+        <Image className="garden" src="/jardin.jpg" alt="jardin" width="700" height="700"/>
         </div>
       </main>
     </>

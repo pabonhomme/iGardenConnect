@@ -1,4 +1,32 @@
 .gridaddgardens {
-    box-shadow: 0 0 10px gray;
-    border: 0px solid black !important;
-  }
+  width: 1000px;
+  box-shadow: 0 0 10px gray;
+  border: 0px solid black !important;
+}
+
+.form-addContainer {
+  margin-top: 30px;
+}
+
+.addGardenLabel {
+  font-size: 20px;
+  white-space: nowrap;
+}
+
+.inputText {
+  width: 280px !important;
+  height: 40px !important;
+  background-color: white !important;
+  border-radius: 10px;
+  border: 1px solid black !important;
+}
+
+.selectPlant{
+  width: 300px !important;;
+}
+
+.submit-addGarden {
+  margin-top: 10px;
+  width: 120px !important;
+  white-space: nowrap;
+}

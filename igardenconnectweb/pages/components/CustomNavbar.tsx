@@ -1,5 +1,3 @@
-import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import {
@@ -16,9 +14,9 @@ export default function CustomNavbar() {
         <Navbar.Brand href="/" className="ms-5">
           <img
             alt=""
-            src="/logo.png"
-            width="30"
-            height="30"
+            src="/logoiGarden.png"
+            width="80"
+            height="35"
             className="d-inline-block align-top"
           />{" "}
           iGardenConnect
