@@ -15,7 +15,7 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function AddGarden() {
   return (
     <>
       <CustomHeader/>
@@ -25,21 +25,22 @@ export default function Home() {
         </header>
         <hr/>
 
-        <div
-          className="container-fluid p-5"
-          id="Presentation"
-        >
+        <div className="container-fluid p-5 mt-5" id="Presentation">
           <h1 className="display-4 font-weight-bold text-center">
-            Bienvenue sur iGardenConnect
+            Ajouter un jardin
           </h1>
-          <p className="lead font-weight-bold text-center">
-            Simple. Utile. Intelligent.
-          </p>
         </div>
 
-        <div className={styles.containerGarden}>
-        <Image className={styles.garden} src="/jardin.jpg" alt="jardin" width="700" height="700"/>
-        </div>
+        <Container className="gridgardens p-5">
+            <Row>
+                <Col>
+                </Col>
+            </Row>
+            <Row>
+                
+            </Row>
+        
+        </Container>
       </main>
     </>
   );
