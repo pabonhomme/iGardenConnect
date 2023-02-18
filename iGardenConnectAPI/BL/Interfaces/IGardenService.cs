@@ -11,7 +11,7 @@ namespace BL.Interfaces
     {
         public IEnumerable<GardenDTO> Get();
         public IEnumerable<GardenDTO> Get(int idUser);
-        public GardenDTO Get(string id);
+        public GardenDTO GetByIdGarden(string id);
         public bool Add(GardenDTO gardenDTO, int idUser);
         public bool UpdateByName(GardenDTO gardenDTO, string name);
         public bool UpdateByNamePlant(GardenDTO gardenDTO, string name, int idPlant);

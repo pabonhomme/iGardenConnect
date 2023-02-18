@@ -2,6 +2,7 @@
 using DAL.Interfaces;
 using DAL.Models;
 using DTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,7 +131,27 @@ namespace DAL.Repositories
         #endregion
         public bool Remove(GardenDTO garden)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = garden.ToEntity();
+
+                if (_dbcontext.Entry(entity).State == EntityState.Detached)
+                {
+                    _dbcontext.Entry(entity).State = EntityState.Modified;
+                }
+
+                _dbcontext.Gardens.Remove(entity);
+
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
 
 

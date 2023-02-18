@@ -32,11 +32,16 @@ namespace BL
         }
 
 
-        public GardenDTO Get(string id)
+        public IEnumerable<GardenDTO> Get(int idUser)
+        {
+            return _gardenRepository.Get(idUser);
+        }
+
+        public GardenDTO GetByIdGarden(string id)
         {
             var garden = _gardenRepository.Get(id);
             garden.GardenSensors = _gardenSensorService.Get(id);
-            foreach(GardenSensorDTO g in garden.GardenSensors)
+            foreach (GardenSensorDTO g in garden.GardenSensors)
             {
                 var sensor = _sensorService.Get((int)g.IdSensor);
                 g.Type = sensor.Type;
@@ -47,16 +52,12 @@ namespace BL
             }
             return garden;
         }
-        public IEnumerable<GardenDTO> Get(int idUser)
-        {
-            return _gardenRepository.Get(idUser);
-        }
-        
         public bool Add(GardenDTO gardenDTO, int idUser)
         {
 
+            bool state = _gardenRepository.Add(gardenDTO, idUser, gardenDTO.Plant.IdPlant);
             _gardenSensorService.Add(gardenDTO.IdGarden);
-            return _gardenRepository.Add(gardenDTO, idUser, gardenDTO.Plant.IdPlant);
+            return state;
         }
         public bool UpdateByName(GardenDTO gardenDTO, string name)
         {
@@ -71,12 +72,21 @@ namespace BL
 
         public bool Remove(GardenDTO gardenDTO)
         {
-            return _gardenRepository.Remove(gardenDTO);
+            var gardenSensorsDTO = _gardenSensorService.Get(gardenDTO.IdGarden);
+            var state = _gardenSensorService.RemoveGardenSensors(gardenSensorsDTO, gardenDTO.IdGarden);
+            var state2 =  _gardenRepository.Remove(gardenDTO);
+            if(state && state2)
+            {
+                return state;
+            }
+            return false;
         }
 
         public bool UpdateByNamePlant(GardenDTO gardenDTO, string name, int idPlant)
         {
             return _gardenRepository.UpdateByNamePlant(gardenDTO, name, idPlant);
         }
+
+
     }
 }

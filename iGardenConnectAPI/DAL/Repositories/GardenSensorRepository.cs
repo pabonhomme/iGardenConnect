@@ -36,9 +36,10 @@ namespace DAL.Repositories
 
                     _dbcontext.Add(entity);
                     _dbcontext.SaveChanges();
-                    return true;
 
                 }
+                return true;
+
             }
             catch (Exception e)
             {
@@ -53,20 +54,74 @@ namespace DAL.Repositories
             return _dbcontext.GardenSensors.ToList().Where(s => s.IdGarden == idGarden).ToList().Select(s => s.ToDTO()).ToList();
 
         }
-
-        public GardenSensorDTO Get(string idGarden, int idSensor)
+        /// <summary>
+        /// get the garden sensor
+        /// </summary>
+        /// <param name="idGarden"></param>
+        /// <param name="idSensor"></param>
+        /// <returns>GardenSensorDTO </returns>
+        public GardenSensorDTO Get(string idGarden, SensorDTO sensor)
         {
-            throw new NotImplementedException();
+            GardenSensorDTO g = _dbcontext.GardenSensors.ToList().Where(s => s.IdGarden == idGarden).FirstOrDefault(s => s.IdSensor == sensor.IdSensor).ToDTO();
+            g.Name = sensor.Name;
+            g.Type = sensor.Type;
+            g.Brand = sensor.Brand;
+            g.Price = sensor.Price;
+            return g;
         }
-
-        public bool Remove(GardenSensorDTO gardenSensorDTO)
+        public bool Update(GardenSensorDTO gardenSensorDTO, string idGarden, string value)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                var entity = gardenSensorDTO.ToEntity();
+                entity.IdGarden = idGarden;
+                entity.Value = value; //update 
+                _dbcontext.Update(entity);
+                _dbcontext.SaveChanges();
+                return true;
 
-        public bool Update(GardenSensorDTO gardenSensorDTO, float value)
-        {
-            throw new NotImplementedException();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
+        #region DELETE
+        /// <summary>
+        /// Remove a plant
+        /// </summary>
+        /// <param name="gardensensor"> the sensor located in the garden to delete</param>
+        /// <returns>Boolean indicating if the deletion went well</returns>
+        public bool Remove(GardenSensorDTO gardensensor, string idGarden)
+        {
+            try
+            {
+                var entity = gardensensor.ToEntity();
+                entity.IdGarden = idGarden; 
+
+                if (_dbcontext.Entry(entity).State == EntityState.Detached)
+                {
+                    _dbcontext.Entry(entity).State = EntityState.Modified;
+                }
+
+                _dbcontext.GardenSensors.Remove(entity);
+
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
+        }
+        #endregion
+
+
+
     }
 }

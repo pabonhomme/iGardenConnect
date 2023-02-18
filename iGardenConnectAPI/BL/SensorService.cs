@@ -18,11 +18,22 @@ namespace BL
         {
             _sensorRepository = sensorRepository;
         }
+
+        /// <summary>
+        /// Get all existent sensors
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<SensorDTO> Get()
         {
             return _sensorRepository.Get();
         }
 
+
+        /// <summary>
+        /// Get sensor by idSensor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public SensorDTO Get(int id)
         {
             return _sensorRepository.Get(id);

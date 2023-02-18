@@ -15,6 +15,11 @@ namespace VM.Extensions
             {
                 return new GardenSensorVM
                 {
+                    IdSensor = (int)dto.IdSensor,
+                    Name = dto.Name,
+                    Type = dto.Type,
+                    Brand = dto.Brand,
+                    Price = dto.Price,
                     Value = dto.Value,
                     State = dto.State,
 
@@ -29,6 +34,12 @@ namespace VM.Extensions
             {
                 return new GardenSensorDTO
                 {
+                    
+                    IdSensor = (int)vm.IdSensor,
+                    Name = vm.Name,
+                    Type = vm.Type,
+                    Brand = vm.Brand,
+                    Price = vm.Price,
                     Value = vm.Value,
                     State = vm.State,
                 };

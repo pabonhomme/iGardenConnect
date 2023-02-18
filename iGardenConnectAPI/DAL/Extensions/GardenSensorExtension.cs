@@ -21,6 +21,7 @@ namespace DAL.Extensions
 
             return new GardenSensor
             {
+               
                 IdSensor = (int)dto.IdSensor,
                 Value = dto.Value,
                 State = dto.State,
@@ -37,6 +38,7 @@ namespace DAL.Extensions
 
             return new GardenSensorDTO
             {
+               
                 IdSensor = entity.IdSensor,
                 Value = entity.Value,
                 State = entity.State,

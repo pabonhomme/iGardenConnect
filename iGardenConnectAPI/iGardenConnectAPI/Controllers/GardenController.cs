@@ -21,6 +21,7 @@ namespace iGardenConnectAPI.Controllers
         #region Properties
         private readonly IGardenService _GardenService;
 
+
         public GardenController(IGardenService gardenService)
         {
             _GardenService = gardenService;
@@ -41,7 +42,7 @@ namespace iGardenConnectAPI.Controllers
         [Route("{id}")]
         public GardenVM Get(string id)
         {
-            var gardenDTO = _GardenService.Get(id);
+            var gardenDTO = _GardenService.GetByIdGarden(id);
 
             return gardenDTO.ToVM();
         }
@@ -73,7 +74,7 @@ namespace iGardenConnectAPI.Controllers
         public bool Update(GardenVM gardenVM)
         {
             
-            var gardenDTO = _GardenService.Get(gardenVM.IdGarden);
+            var gardenDTO = _GardenService.GetByIdGarden(gardenVM.IdGarden);
             var state = false;
 
             if (gardenVM.Name != gardenDTO.Name && gardenVM.Plant.IdPlant != gardenDTO.Plant.IdPlant)
@@ -95,6 +96,23 @@ namespace iGardenConnectAPI.Controllers
             }
 
             return state;
+        }
+        #endregion
+        #region DELETE
+        [HttpDelete]
+        [Route("{idGarden}")]
+        public ActionResult Delete(string idGarden)
+        {
+            var gardenDTO = _GardenService.GetByIdGarden(idGarden);
+
+
+            if (gardenDTO is null)
+            {
+                return NotFound();
+            }
+
+            var state = _GardenService.Remove(gardenDTO);
+            return Ok(state);
         }
         #endregion
 

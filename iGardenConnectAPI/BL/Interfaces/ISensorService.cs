@@ -10,6 +10,8 @@ namespace BL.Interfaces
     public interface ISensorService
     {
         public IEnumerable<SensorDTO> Get();
+
+
         public SensorDTO Get(int id);
         public bool Add(SensorDTO dto);
 
