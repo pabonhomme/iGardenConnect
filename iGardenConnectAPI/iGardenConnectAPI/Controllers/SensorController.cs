@@ -66,19 +66,19 @@ namespace iGardenConnectAPI.Controllers
         }
         #endregion
 
-       /* #region DELETE
+        #region DELETE
         [HttpDelete]
-        [Route("{id}")]
-        public ActionResult Delete(int id)
+        [Route("{idSensor}")]
+        public ActionResult Delete(int idSensor)
         {
-            var SensorDTO = Get(id).ToDTO();
+            var sensorDTO = _sensorService.Get(idSensor);
 
-            if (SensorDTO is null)
+            if (sensorDTO is null)
             {
                 return NotFound();
             }
 
-            var state = _sensorService.Remove(SensorDTO);
+            var state = _sensorService.Remove(sensorDTO);
             return Ok(state);
         }
         #endregion*/

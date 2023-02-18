@@ -10,6 +10,7 @@ namespace DAL.Interfaces
     public interface IGardenSensorRepository
     {
         public IEnumerable<GardenSensorDTO> Get(string idGarden);
+        public IEnumerable<GardenSensorDTO> GetByIdSensor(int idSensor);
 
         public GardenSensorDTO Get(string idGarden, SensorDTO s);
 

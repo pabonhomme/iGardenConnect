@@ -16,6 +16,7 @@ namespace BL.Interfaces
         public bool Add(SensorDTO dto);
 
         public bool Update(SensorDTO dto);
+        public bool Remove(SensorDTO dto);
 
     }
 

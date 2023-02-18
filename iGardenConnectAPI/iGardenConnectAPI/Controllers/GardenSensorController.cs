@@ -64,7 +64,7 @@ namespace iGardenConnectAPI.Controllers
         #endregion
 
 
-        /*  #region POST
+          /*#region POST
           [HttpPost]
           [Route("{idGarden}/{idSensor}")]
           public bool Add(GardenSensorVM gardenSensorVM, string idGarden, int idSensor)
@@ -73,8 +73,8 @@ namespace iGardenConnectAPI.Controllers
               var state = _GardenSensorService.Add(gardenSensorDTO, idGarden, idSensor);
               return state;
           }
-          #endregion
-        */
+          #endregion*/
+        
 
         #region DELETE
         [HttpDelete]
@@ -106,7 +106,6 @@ namespace iGardenConnectAPI.Controllers
                 return NotFound();
             }
 
-           
             var state = _GardenSensorService.RemoveGardenSensors(gardenSensorsDTO, idGarden);
             return Ok(state);
         }

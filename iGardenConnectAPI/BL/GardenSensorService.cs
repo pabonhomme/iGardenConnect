@@ -14,6 +14,8 @@ namespace BL
     {
         private readonly IGardenSensorRepository _gardenSensorRepository;
         private readonly ISensorService _sensorService;
+        private readonly IGardenService _gardenService;
+
 
 
         public GardenSensorService(IGardenSensorRepository gardenSensorRepository, ISensorService sensorService)
@@ -22,16 +24,6 @@ namespace BL
             _sensorService = sensorService;
         }
 
-        public bool Add(string idGarden)
-        {
-            var sensors = _sensorService.Get();
-            return  _gardenSensorRepository.Add(idGarden, sensors);
-        }
-
-        public bool Add(string idGarden, int idSensor)
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<GardenSensorDTO> Get(string idGarden)
         {
@@ -55,11 +47,27 @@ namespace BL
            SensorDTO s = _sensorService.Get(idSensor);
             return _gardenSensorRepository.Get(idGarden, s);
         }
+        public IEnumerable<GardenSensorDTO> GetByIdSensor(int idSensor)
+        {
+            return _gardenSensorRepository.GetByIdSensor(idSensor);
+
+        }
+        public bool Add(string idGarden)
+        {
+            var sensors = _sensorService.Get();
+            return _gardenSensorRepository.Add(idGarden, sensors);
+        }
+
+        public bool Add(string idGarden, int idSensor)
+        {
+            throw new NotImplementedException();
+        }
         public bool Update(string idGarden, int idSensor, string value)
         {
             GardenSensorDTO gsDTO = this.Get(idGarden, idSensor);
             return _gardenSensorRepository.Update(gsDTO, idGarden, value);
         }
+ 
         public bool Remove(GardenSensorDTO gardenSensorDTO, string idGarden)
         {
             return _gardenSensorRepository.Remove(gardenSensorDTO,idGarden);
@@ -74,5 +82,23 @@ namespace BL
             }
             return state;
         }
+
+        public bool RemoveGardenSensorByIdSensor(int idSensor)
+        {
+            var gardenSensors = this.GetByIdSensor(idSensor);
+            var state = false;
+            foreach (GardenSensorDTO gs in gardenSensors)
+            {
+                foreach(GardenDTO g in _gardenService.Get())
+                {
+                    state = this.Remove(gs, g.IdGarden);
+
+                }
+
+            }
+            return state;
+        }
+
+
     }
 }

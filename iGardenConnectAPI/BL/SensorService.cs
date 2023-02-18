@@ -14,7 +14,7 @@ namespace BL
     {
         private readonly ISensorRepository _sensorRepository;
 
-        public SensorService(ISensorRepository sensorRepository)
+        public SensorService(ISensorRepository sensorRepository, IGardenSensorService gardenSensorService)
         {
             _sensorRepository = sensorRepository;
         }
@@ -53,5 +53,13 @@ namespace BL
             return _sensorRepository.Update(dto);
         }
         #endregion
+
+        public bool Remove(SensorDTO dto)
+        {
+            //bool state = _gardenSensorService.RemoveGardenSensorByIdSensor(dto.IdSensor);
+            bool state2 = _sensorRepository.Remove(dto);
+           
+            return state2;
+        }
     }
 }

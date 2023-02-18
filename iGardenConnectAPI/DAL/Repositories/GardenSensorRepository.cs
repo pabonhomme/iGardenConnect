@@ -69,6 +69,10 @@ namespace DAL.Repositories
             g.Price = sensor.Price;
             return g;
         }
+        public IEnumerable<GardenSensorDTO> GetByIdSensor(int idSensor)
+        {
+            return _dbcontext.GardenSensors.ToList().Where(s => s.IdSensor == idSensor).Select(s => s.ToDTO());
+        }
         public bool Update(GardenSensorDTO gardenSensorDTO, string idGarden, string value)
         {
             try
@@ -119,6 +123,8 @@ namespace DAL.Repositories
 
             return false;
         }
+
+
         #endregion
 
 
