@@ -15,12 +15,13 @@ namespace BL
         private readonly IGardenRepository _gardenRepository;
         private readonly ISensorService _sensorService;
         private readonly IGardenSensorService _gardenSensorService;
-
-        public GardenService(IGardenRepository gardenRepository, ISensorService sensorService, IGardenSensorService gardenSensorService)
+        private readonly IPlantService _plantService;
+        public GardenService(IGardenRepository gardenRepository, ISensorService sensorService, IGardenSensorService gardenSensorService, IPlantService plantService)
         {
             _gardenRepository = gardenRepository;
             _sensorService = sensorService;
             _gardenSensorService = gardenSensorService;
+            _plantService = plantService;
         }
 
 
@@ -30,10 +31,11 @@ namespace BL
            return _gardenRepository.Get();
         }
 
+
         public GardenDTO Get(string id)
         {
             var garden = _gardenRepository.Get(id);
-            garden.GardenSensors = _gardenRepository.GetGardenSensors(id);
+            garden.GardenSensors = _gardenSensorService.Get(id);
             foreach(GardenSensorDTO g in garden.GardenSensors)
             {
                 var sensor = _sensorService.Get((int)g.IdSensor);
@@ -45,22 +47,36 @@ namespace BL
             }
             return garden;
         }
-        public bool Add(GardenDTO gardenDTO, int idUser, int idPlant)
+        public IEnumerable<GardenDTO> Get(int idUser)
+        {
+            return _gardenRepository.Get(idUser);
+        }
+        
+        public bool Add(GardenDTO gardenDTO, int idUser)
         {
 
             _gardenSensorService.Add(gardenDTO.IdGarden);
-            return _gardenRepository.Add(gardenDTO, idUser, idPlant);
+            return _gardenRepository.Add(gardenDTO, idUser, gardenDTO.Plant.IdPlant);
         }
-        public bool Update(GardenDTO plantDTO)
+        public bool UpdateByName(GardenDTO gardenDTO, string name)
         {
-            throw new NotImplementedException();
+           return _gardenRepository.UpdateByName(gardenDTO, name);
+        }
+        public bool UpdateByPlant(GardenDTO gardenDTO, int idPlant)
+        {
+            return _gardenRepository.UpdateByPlant(gardenDTO, idPlant);
+
         }
 
-        public bool Remove(GardenDTO plant)
+
+        public bool Remove(GardenDTO gardenDTO)
         {
-            throw new NotImplementedException();
+            return _gardenRepository.Remove(gardenDTO);
         }
 
-  
+        public bool UpdateByNamePlant(GardenDTO gardenDTO, string name, int idPlant)
+        {
+            return _gardenRepository.UpdateByNamePlant(gardenDTO, name, idPlant);
+        }
     }
 }

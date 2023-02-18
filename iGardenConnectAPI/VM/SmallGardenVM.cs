@@ -14,8 +14,7 @@ namespace VM
         public DateTime? WateringDuration { get; set; }
         public short? Watered { get; set; }
         public DateTime? LastWatered { get; set; }
-        public int? IdPlant { get; set; }
-        public int? IdUser { get; set; }
+        public PlantVM Plant { get; set; }
 
     }
 }

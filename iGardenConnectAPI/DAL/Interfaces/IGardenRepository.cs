@@ -9,12 +9,17 @@ namespace DAL.Interfaces
 {
      public interface IGardenRepository
     {
-        public IEnumerable<GardenSensorDTO> GetGardenSensors(string idGarden);
 
         public IEnumerable<GardenDTO> Get();
+        public IEnumerable<GardenDTO> Get(int idUser);
         public GardenDTO Get(string id);
         public bool Add(GardenDTO dto, int idUser, int idPlant);
-        public bool Update(GardenDTO gardenDTO);
-        public bool Remove(GardenDTO garden);
+        public bool UpdateByName(GardenDTO gardenDTO, string name);
+        public bool UpdateByPlant(GardenDTO gardenDTO, int idPlant);
+
+        public bool UpdateByNamePlant(GardenDTO gardenDTO, string name, int idPlant);
+
+
+        public bool Remove(GardenDTO gardenDTO);
     }
 }

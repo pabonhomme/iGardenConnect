@@ -47,13 +47,53 @@ namespace iGardenConnectAPI.Controllers
         }
         #endregion
 
+        [HttpGet]
+        [Route("user/{idUser}")]
+        public IEnumerable<GardenVM> Get(int idUser)
+        {
+            var gardensDTO = _GardenService.Get(idUser);
+
+            return gardensDTO.Select(dto => dto.ToVM());
+        }
+        
         #region POST
         [HttpPost]
-        [Route("{idUser}/{idPlant}")]
-        public bool Add(GardenVM gardenVM, int idUser, int idPlant)
+        [Route("{idUser}")]
+        public bool Add(GardenVM gardenVM, int idUser)
         {
             var gardenDTO = gardenVM.ToDTO();
-            var state = _GardenService.Add(gardenDTO, idUser, idPlant);
+            var state = _GardenService.Add(gardenDTO, idUser);
+            return state;
+        }
+        #endregion
+
+        #region PUT
+        [HttpPut]
+        [Route("")]
+        public bool Update(GardenVM gardenVM)
+        {
+            
+            var gardenDTO = _GardenService.Get(gardenVM.IdGarden);
+            var state = false;
+
+            if (gardenVM.Name != gardenDTO.Name && gardenVM.Plant.IdPlant != gardenDTO.Plant.IdPlant)
+            {
+                var stateName = _GardenService.UpdateByNamePlant(gardenDTO, gardenVM.Name, gardenVM.Plant.IdPlant);
+                state = stateName;
+
+            }
+            else if (gardenVM.Name != gardenDTO.Name)
+            {
+                var stateName = _GardenService.UpdateByName(gardenDTO, gardenVM.Name);
+                state = stateName;
+
+            }
+            else if (gardenVM.Plant.IdPlant != gardenDTO.Plant.IdPlant)
+            {
+                var statePlant = _GardenService.UpdateByPlant(gardenDTO, gardenVM.Plant.IdPlant);
+                state = statePlant;
+            }
+
             return state;
         }
         #endregion

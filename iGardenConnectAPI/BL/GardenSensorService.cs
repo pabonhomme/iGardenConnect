@@ -29,7 +29,7 @@ namespace BL
 
         public IEnumerable<GardenSensorDTO> Get(string idGarden)
         {
-            throw new NotImplementedException();
+            return _gardenSensorRepository.Get(idGarden);
         }
 
         public GardenSensorDTO Get(string idGarden, int idSensor)

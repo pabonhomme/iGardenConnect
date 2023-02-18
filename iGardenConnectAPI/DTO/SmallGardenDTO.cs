@@ -14,8 +14,7 @@ namespace DTO
         public DateTime? WateringDuration { get; set; }
         public short? Watered { get; set; }
         public DateTime? LastWatered { get; set; }
-        public int? IdPlant { get; set; }
-        public int? IdUser { get; set; }
+        public PlantDTO Plant { get; set; }
 
     }
 }

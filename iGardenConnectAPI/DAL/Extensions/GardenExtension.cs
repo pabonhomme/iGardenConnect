@@ -27,9 +27,9 @@ namespace DAL.Extensions
                 WateringDuration = dto.WateringDuration,
                 Watered = dto.Watered,
                 LastWatered = dto.LastWatered,
-                IdPlant = dto.IdPlant,
-                IdUser = dto.IdUser,
-                
+                IdPlant = dto.Plant.IdPlant,
+              
+           
 
             };
         }
@@ -51,8 +51,7 @@ namespace DAL.Extensions
                 WateringDuration = entity.WateringDuration,
                 Watered = entity.Watered,
                 LastWatered = entity.LastWatered,
-                IdPlant = entity.IdPlant,
-                IdUser = entity.IdUser,
+                Plant = new PlantDTO(),
                 GardenSensors = new List<GardenSensorDTO>(),
 
         };
