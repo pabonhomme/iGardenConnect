@@ -14,7 +14,6 @@ namespace BL
     {
         private readonly IGardenSensorRepository _gardenSensorRepository;
         private readonly ISensorService _sensorService;
-        private readonly IGardenService _gardenService;
 
 
 
@@ -85,18 +84,18 @@ namespace BL
 
         public bool RemoveGardenSensorByIdSensor(int idSensor)
         {
-            var gardenSensors = this.GetByIdSensor(idSensor);
-            var state = false;
-            foreach (GardenSensorDTO gs in gardenSensors)
-            {
-                foreach(GardenDTO g in _gardenService.Get())
-                {
-                    state = this.Remove(gs, g.IdGarden);
+            /* var gardenSensors = this.GetByIdSensor(idSensor);
+             var state = false;
+             foreach (GardenSensorDTO gs in gardenSensors)
+             {
+                 foreach(GardenDTO g in _gardenService.Get())
+                 {
+                     state = this.Remove(gs, g.IdGarden);
 
-                }
+                 }
 
-            }
-            return state;
+             }*/
+            return true;
         }
 
 

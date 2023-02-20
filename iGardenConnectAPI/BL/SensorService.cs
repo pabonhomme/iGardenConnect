@@ -14,7 +14,7 @@ namespace BL
     {
         private readonly ISensorRepository _sensorRepository;
 
-        public SensorService(ISensorRepository sensorRepository, IGardenSensorService gardenSensorService)
+        public SensorService(ISensorRepository sensorRepository)
         {
             _sensorRepository = sensorRepository;
         }
