@@ -17,7 +17,6 @@ namespace VM.Extensions
                 {
                     IdUser = dto.IdUser,
                     Name = dto.Name,
-                    Username = dto.Username,
                     Login = dto.Login,
                     Role = dto.Role,
                 };
@@ -33,7 +32,6 @@ namespace VM.Extensions
                 {
                     IdUser = vm.IdUser,
                     Name = vm.Name,
-                    Username = vm.Username,
                     Login = vm.Login,
                     Role = vm.Role,
                 };

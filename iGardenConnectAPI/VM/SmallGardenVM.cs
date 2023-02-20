@@ -10,8 +10,6 @@ namespace VM
     {
         public string IdGarden { get; set; }
         public string Name { get; set; }
-        public string Price { get; set; }
-        public DateTime? WateringDuration { get; set; }
         public short? Watered { get; set; }
         public DateTime? LastWatered { get; set; }
         public PlantVM Plant { get; set; }

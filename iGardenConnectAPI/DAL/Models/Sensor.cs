@@ -12,7 +12,7 @@ namespace DAL.Models
             GardenSensors = new HashSet<GardenSensor>();
         }
 
-        public int? IdSensor { get; set; }
+        public int IdSensor { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Brand { get; set; }

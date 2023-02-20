@@ -23,8 +23,6 @@ namespace DAL.Extensions
             {
                 IdGarden = dto.IdGarden,
                 Name = dto.Name,
-                Price = dto.Price,
-                WateringDuration = dto.WateringDuration,
                 Watered = dto.Watered,
                 LastWatered = dto.LastWatered,
                 IdPlant = dto.Plant.IdPlant,
@@ -47,8 +45,6 @@ namespace DAL.Extensions
             {
                 IdGarden = entity.IdGarden,
                 Name = entity.Name,
-                Price = entity.Price,
-                WateringDuration = entity.WateringDuration,
                 Watered = entity.Watered,
                 LastWatered = entity.LastWatered,
                 Plant = new PlantDTO(),

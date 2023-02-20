@@ -50,16 +50,7 @@ namespace DAL.Models
                     .IsUnicode(false)
                     .HasColumnName("name");
 
-                entity.Property(e => e.Price)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("price");
-
                 entity.Property(e => e.Watered).HasColumnName("watered");
-
-                entity.Property(e => e.WateringDuration)
-                    .HasColumnType("datetime")
-                    .HasColumnName("watering_duration");
 
                 entity.HasOne(d => d.IdPlantNavigation)
                     .WithMany(p => p.Gardens)
@@ -183,11 +174,6 @@ namespace DAL.Models
                 entity.Property(e => e.Role)
                     .HasMaxLength(100)
                     .HasColumnName("role")
-                    .IsFixedLength();
-
-                entity.Property(e => e.Username)
-                    .HasMaxLength(100)
-                    .HasColumnName("username")
                     .IsFixedLength();
             });
 

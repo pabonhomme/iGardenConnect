@@ -21,7 +21,6 @@ namespace DAL.Extensions
             {
                 IdUser = dto.IdUser,
                 Name = dto.Name,
-                Username = dto.Username,
                 Login = dto.Login,
                 Role = dto.Role,
             };
@@ -38,7 +37,6 @@ namespace DAL.Extensions
             {
                 IdUser = entity.IdUser,
                 Name = entity.Name,
-                Username = entity.Username,
                 Login = entity.Login,
                 Role = entity.Role,
             };

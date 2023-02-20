@@ -17,8 +17,6 @@ namespace VM.Extensions
                 {
                     IdGarden = dto.IdGarden,
                     Name = dto.Name,
-                    Price = dto.Price,
-                    WateringDuration = dto.WateringDuration,
                     Watered = dto.Watered,
                     LastWatered = dto.LastWatered,
                     Plant = dto.Plant == null ? new PlantVM() : dto.Plant.ToVM(),
@@ -37,8 +35,6 @@ namespace VM.Extensions
                 {
                     IdGarden = vm.IdGarden,
                     Name = vm.Name,
-                    Price = vm.Price,
-                    WateringDuration = vm.WateringDuration,
                     Watered = vm.Watered,
                     LastWatered = vm.LastWatered,
                     Plant = vm.Plant == null ? new PlantDTO() : vm.Plant.ToDTO(),
