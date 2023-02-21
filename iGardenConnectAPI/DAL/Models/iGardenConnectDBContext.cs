@@ -171,6 +171,11 @@ namespace DAL.Models
                     .HasColumnName("name")
                     .IsFixedLength();
 
+                entity.Property(e => e.Password)
+                    .HasMaxLength(1000)
+                    .HasColumnName("password")
+                    .IsFixedLength();
+
                 entity.Property(e => e.Role)
                     .HasMaxLength(100)
                     .HasColumnName("role")
