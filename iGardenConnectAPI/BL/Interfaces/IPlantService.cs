@@ -12,6 +12,7 @@ namespace BL.Interfaces
         public IEnumerable<PlantDTO> Get();
         public PlantDTO Get(int id);
         public bool Add(PlantDTO dto);
+
         public bool Update(PlantDTO plantDTO);
         public bool Remove(PlantDTO plant);
     }
