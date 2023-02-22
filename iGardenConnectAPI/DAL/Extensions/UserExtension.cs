@@ -23,6 +23,8 @@ namespace DAL.Extensions
                 Name = dto.Name,
                 Login = dto.Login,
                 Role = dto.Role,
+                Password = dto.Password,
+
             };
         }
 
@@ -39,6 +41,7 @@ namespace DAL.Extensions
                 Name = entity.Name,
                 Login = entity.Login,
                 Role = entity.Role,
+                Password = entity.Password,
             };
         }
     }

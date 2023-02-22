@@ -19,6 +19,7 @@ namespace VM.Extensions
                     Name = dto.Name,
                     Login = dto.Login,
                     Role = dto.Role,
+                    Password = dto.Password,
                 };
             }
             return null;
@@ -34,6 +35,8 @@ namespace VM.Extensions
                     Name = vm.Name,
                     Login = vm.Login,
                     Role = vm.Role,
+                    Password = vm.Password,
+
                 };
             }
 
