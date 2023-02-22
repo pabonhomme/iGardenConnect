@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import CustomNavbar from "./components/CustomNavbar";
-import CustomHeader from "./components/CustomHeader";
+import CustomNavbar from "../components/CustomNavbar";
+import CustomHeader from "../components/CustomHeader";
 import {
   Container,
   Carousel,

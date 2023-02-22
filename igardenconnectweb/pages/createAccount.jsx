@@ -3,17 +3,18 @@ import React, { FormEvent } from "react";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import CustomNavbar from "./components/CustomNavbar";
-import CustomHeader from "./components/CustomHeader";
+import CustomNavbar from "../components/CustomNavbar";
+import CustomHeader from "../components/CustomHeader";
 import { Form, Button } from "react-bootstrap";
+import { UserVM } from "../model/UserVM"
 
 export default function CreateAccount() {
-  let email = "";
+  let login = "";
   let password = "";
 
-  function handleEmailChange(event) {
-    email = event.target.value;
-    console.log(email);
+  function handleLoginChange(event) {
+    login = event.target.value;
+    console.log(login);
   }
 
   function handlePasswordChange(event) {
@@ -22,20 +23,17 @@ export default function CreateAccount() {
   }
 
   function onsubmit(event) {
-    // event.preventDefault();
-    // // create user object
-    // const user = {
-    //     email: email,
-    //     passwd: password,
-    // };
-    // // send post request to port 8001
-    // fetch('http://localhost:8001/api/users', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(user)
-    // }).then(response => console.log(response));
+    event.preventDefault();
+    // create user object
+    const user = new UserVM(0, "Paul", login, "user", password)
+    // send post request to port 8001
+    fetch('http://localhost:5241/api/User', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    }).then(response => console.log(response));
   }
 
   return (
@@ -46,21 +44,21 @@ export default function CreateAccount() {
           <CustomNavbar />
         </header>
         <hr />
-        <div className="email-container p-5">
+        <div className="login-container p-5">
           <h2>Créer mon compte</h2>
           <Form className="form-login" onSubmit={onsubmit}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label className="login-text">Entrer votre email :</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasiclogin">
+              <Form.Label className="login-text">Saisissez un login :</Form.Label>
               <Form.Control
                 className="inputText"
-                type="email"
-                placeholder="prenom.nom@gmail.com"
-                onChange={handleEmailChange}
+                type="text"
+                placeholder="mon pseudo"
+                onChange={handleLoginChange}
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label className="login-text">Entrer votre mot de passe :</Form.Label>
+              <Form.Label className="login-text">Saisissez un mot de passe :</Form.Label>
               <Form.Control
                 className="inputText"
                 type="password"

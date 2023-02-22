@@ -4,8 +4,8 @@ import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 
 import { useState } from "react";
-import CustomNavbar from "./components/CustomNavbar";
-import CustomHeader from "./components/CustomHeader";
+import CustomNavbar from "../components/CustomNavbar";
+import CustomHeader from "../components/CustomHeader";
 import { Form, Button, Container } from "react-bootstrap";
 
 export default function Login() {
@@ -83,17 +83,17 @@ export default function Login() {
           <CustomNavbar />
         </header>
         <hr />
-        <div className="email-container p-5">
+        <div className="login-container p-5">
           <h2>Se connecter</h2>
           <Form className="form-login" onSubmit={onsubmit}>
-            <Form.Group className="mb-3" controlId="formBasicUsername">
+            <Form.Group className="mb-3" controlId="formBasiclogin">
               <Form.Label className="login-text">
-                Entrer votre email :
+                Entrer votre login :
               </Form.Label>
               <Form.Control
                 className="inputText"
-                type="email"
-                placeholder="prenom.nom@gmail.com"
+                type="text"
+                placeholder="mon pseudo"
                 onChange={handleUsernameChange}
               />
             </Form.Group>
