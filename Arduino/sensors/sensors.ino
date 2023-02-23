@@ -1,6 +1,7 @@
 #include <FastLED.h>
 #include <Grove_LED_Bar.h>
 #include <Wire.h>
+#include "DHT.h" //Temperature&Humidity
  
 #ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
 #define SERIAL SerialUSB
@@ -11,7 +12,10 @@
 unsigned char low_data[8] = {0};
 unsigned char high_data[12] = {0};
  
- 
+//Temperature&Humidity
+#define DHTPIN 2
+#define DHTTYPE DHT11
+
 #define NO_TOUCH       0xFE
 #define THRESHOLD      100
 #define ATTINY1_HIGH_ADDR   0x78
@@ -34,7 +38,7 @@ Grove_LED_Bar bar(3, 2, 0, 10);
 //----------------soil
 int relay_2 = 7;
 int soilMoistureValue = 0;
-
+int pumpTime = 0;
 void getHigh12SectionValue(void)
 {
   memset(high_data, 0, sizeof(high_data));
@@ -73,42 +77,44 @@ void check()
     getLow8SectionValue();
     getHigh12SectionValue();
  
-    Serial.println("low 8 sections value = ");
+    //Serial.println("low 8 sections value = ");
     for (int i = 0; i < 8; i++)
     {
-      Serial.print(low_data[i]);
-      Serial.print(".");
+      //Serial.print(low_data[i]);
+      //Serial.print(".");
       if (low_data[i] >= sensorvalue_min && low_data[i] <= sensorvalue_max)
       {
         low_count++;
       }
-      if (low_count == 8)
+      /*if (low_count == 8)
       {
         Serial.print("      ");
         Serial.print("PASS");
       }
+      */
     }
-    Serial.println("  ");
-    Serial.println("  ");
-    Serial.println("high 12 sections value = ");
+    //Serial.println("  ");
+    //Serial.println("  ");
+    //Serial.println("high 12 sections value = ");
     for (int i = 0; i < 12; i++)
     {
-      Serial.print(high_data[i]);
-      Serial.print(".");
+      //Serial.print(high_data[i]);
+      //Serial.print(".");
  
       if (high_data[i] >= sensorvalue_min && high_data[i] <= sensorvalue_max)
       {
         high_count++;
       }
+      /*
       if (high_count == 12)
       {
         Serial.print("      ");
         Serial.print("PASS");
-      }
+      }*/
     }
  
-    Serial.println("  ");
-    Serial.println("  ");
+    //Serial.println("  ");
+    //Serial.println("  ");
  
     for (int i = 0 ; i < 8; i++) {
       if (low_data[i] > THRESHOLD) {
@@ -135,6 +141,8 @@ void check()
     delay(1000);
 }
 
+//Temperature&Humidity
+DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
   Serial.begin(9600); // open serial port, set the baud rate to 9600 bps
@@ -147,8 +155,14 @@ void setup() {
   pinMode(relay_4, OUTPUT);
   FastLED.addLeds<NEOPIXEL, DATA_PIN1>(leds1, NUM_LEDS1); 
   FastLED.addLeds<NEOPIXEL, DATA_PIN2>(leds2, NUM_LEDS2); 
+
+  dht.begin(); //Temperature&Humidity
 }
+
+
 void loop() {
+  Serial.println("Temperature = " + String(dht.readTemperature())+" C");
+  Serial.println("Humidite = " + String(dht.readHumidity())+" %");
   soilMoistureValue = analogRead(A4);  //put Sensor insert into soil
   Serial.println(soilMoistureValue);
   if(soilMoistureValue > 515 )
@@ -156,13 +170,19 @@ void loop() {
     Serial.println("Dry");
     Serial.println(soilMoistureValue);
     digitalWrite(relay_2, HIGH);
-    Serial.println("All relays ON");    
+    if(pumpTime==0)
+    {
+      pumpTime=millis(); 
+    }
+    //Serial.println("All relays ON");    
   }
   else if(soilMoistureValue <515 )
   {
     Serial.println("Wet");
     digitalWrite(relay_2, LOW);
-    Serial.println("All relays OFF");
+    Serial.println("Temps Pompe Active : " + String(pumpTime/1000) + " secondes");
+    pumpTime=0;
+    //Serial.println("All relays OFF");
   }
     // delay(1000);
   //light sensor
@@ -174,7 +194,7 @@ void loop() {
     digitalWrite(relay_3, HIGH);
     digitalWrite(relay_4, HIGH);
     if(digitalRead(relay_3)==HIGH){
-      Serial.println("Relay 3 ON");
+      Serial.println("Bandeau LED1: Relay 3 ON");
     for(int i=0;i<166;i++){
     leds1[i] = CRGB::Blue;
     FastLED.show();
@@ -183,7 +203,7 @@ void loop() {
   }
   }
   if(digitalRead(relay_4)==HIGH){
-    Serial.println("relay 4 ON");
+    Serial.println("Bandeau LED2: Relay 4 ON");
     for(int i=0;i<166;i++){
     leds2[i] = CRGB::Blue;
     FastLED.show();
@@ -198,4 +218,7 @@ void loop() {
     digitalWrite(relay_4, LOW);
   }
   check();
+
+  //delaySending
+  delay(5000);
   }
