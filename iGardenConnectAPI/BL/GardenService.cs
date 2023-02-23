@@ -59,6 +59,8 @@ namespace BL
             _gardenSensorService.Add(gardenDTO.IdGarden);
             return state;
         }
+
+
         public bool UpdateByName(GardenDTO gardenDTO, string name)
         {
            return _gardenRepository.UpdateByName(gardenDTO, name);

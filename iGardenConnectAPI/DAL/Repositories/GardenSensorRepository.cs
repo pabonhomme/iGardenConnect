@@ -20,34 +20,6 @@ namespace DAL.Repositories
             _dbcontext = dbcontext;
         }
 
-        public bool Add(string idGarden, IEnumerable<SensorDTO> sensors)
-        {
-            try
-            {
-                GardenSensor entity = new GardenSensor();
-                foreach (SensorDTO sensor in sensors)
-                {
-
-                    entity.IdGarden = idGarden;
-                    entity.IdSensor = sensor.IdSensor;
-                    entity.Value = "23";
-                    entity.State = "OFF";
-
-
-                    _dbcontext.Add(entity);
-                    _dbcontext.SaveChanges();
-
-                }
-                return true;
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return false;
-        }
 
         public IEnumerable<GardenSensorDTO> Get(string idGarden)
         {
@@ -78,6 +50,65 @@ namespace DAL.Repositories
         {
             var gardenSensor = _dbcontext.GardenSensors.ToList().FirstOrDefault(s => s.IdSensor == idSensor && s.IdGarden == idGarden).ToDTO();
             return gardenSensor;
+        }
+
+        public bool Add(string idGarden, IEnumerable<SensorDTO> sensors)
+        {
+            try
+            {
+                GardenSensor entity = new GardenSensor();
+                foreach (SensorDTO sensor in sensors)
+                {
+
+                    entity.IdGarden = idGarden;
+                    entity.IdSensor = sensor.IdSensor;
+                    entity.Value = "23";
+                    entity.State = "OFF";
+
+
+                    _dbcontext.Add(entity);
+                    _dbcontext.SaveChanges();
+
+                }
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
+        }
+        /// <summary>
+        /// Attach new sensor to a Garden by admin
+        /// </summary>
+        /// <param name="idGarden"></param>
+        /// <param name="idSensor"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public bool AddGardenSensor(string idGarden, int idSensor)
+        {
+            try
+            {
+                GardenSensor entity = new GardenSensor();
+                entity.IdGarden = idGarden;
+                entity.IdSensor = idSensor;
+                entity.Value = "13";
+                entity.State = "OFF";
+
+                _dbcontext.Add(entity);
+                _dbcontext.SaveChanges();
+
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
         public bool Update(GardenSensorDTO gardenSensorDTO, string idGarden, string value)
         {
@@ -144,8 +175,6 @@ namespace DAL.Repositories
 
             return state;
         }
-
-
 
     }
 }

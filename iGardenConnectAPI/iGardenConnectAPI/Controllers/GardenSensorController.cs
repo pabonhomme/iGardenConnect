@@ -42,6 +42,8 @@ namespace iGardenConnectAPI.Controllers
             return gardenSensorsDTO.Select(dto => dto.ToVM());
         }
 
+
+
         [HttpGet]
         [Route("{idGarden}/{idSensor}")]
         public GardenSensorVM Get(string idGarden, int idSensor)
@@ -64,16 +66,15 @@ namespace iGardenConnectAPI.Controllers
         #endregion
 
 
-          /*#region POST
-          [HttpPost]
-          [Route("{idGarden}/{idSensor}")]
-          public bool Add(GardenSensorVM gardenSensorVM, string idGarden, int idSensor)
+        #region 
+        [HttpPost]
+        [Route("{idGarden}/{idSensor}")]
+          public bool Add(string idGarden, int idSensor)
           {
-              var gardenSensorDTO = gardenSensorVM.ToDTO();
-              var state = _GardenSensorService.Add(gardenSensorDTO, idGarden, idSensor);
+            var state = _GardenSensorService.AddGardenSensor(idGarden, idSensor);
               return state;
           }
-          #endregion*/
+         #endregion
         
 
         #region DELETE
