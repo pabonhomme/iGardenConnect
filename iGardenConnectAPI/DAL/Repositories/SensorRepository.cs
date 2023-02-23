@@ -74,6 +74,7 @@ namespace DAL.Repositories
             try
             {
                 var entity = dto.ToEntity(0);
+                entity.IdSensor = dto.IdSensor;
 
                 if (_dbcontext.Entry(entity).State == EntityState.Detached)
                 {

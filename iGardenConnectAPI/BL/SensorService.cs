@@ -1,5 +1,6 @@
 ﻿using BL.Interfaces;
 using DAL.Interfaces;
+using DAL.Models;
 using DAL.Repositories;
 using DTO;
 using System;
@@ -65,10 +66,13 @@ namespace BL
         {
             bool state;
             bool state2;
-            foreach (GardenDTO g in _gardenRepository.Get())
+            var gardens = _gardenRepository.Get();
+            foreach(GardenDTO g in gardens)
             {
-                 state = _gardensensorRepository.RemoveGardenSensorByIdSensor(dto.IdSensor, g.IdGarden);
+                state = _gardensensorRepository.RemoveGardenSensorByIdSensor(dto.IdSensor, g.IdGarden);
+
             }
+
             state2 = _sensorRepository.Remove(dto);
 
             return state2;
