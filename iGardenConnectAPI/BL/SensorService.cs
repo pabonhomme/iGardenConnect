@@ -13,10 +13,17 @@ namespace BL
     public class SensorService : ISensorService
     {
         private readonly ISensorRepository _sensorRepository;
+        private readonly IGardenSensorRepository _gardensensorRepository;
+        private readonly IGardenRepository _gardenRepository;
 
-        public SensorService(ISensorRepository sensorRepository)
+
+        public SensorService(ISensorRepository sensorRepository, IGardenSensorRepository gardenSensorRepository,  IGardenRepository gardenRepository)
         {
             _sensorRepository = sensorRepository;
+            _gardensensorRepository = gardenSensorRepository;
+            _gardenRepository = gardenRepository;
+
+
         }
 
         /// <summary>
@@ -56,9 +63,14 @@ namespace BL
 
         public bool Remove(SensorDTO dto)
         {
-            //bool state = _gardenSensorService.RemoveGardenSensorByIdSensor(dto.IdSensor);
-            bool state2 = _sensorRepository.Remove(dto);
-           
+            bool state;
+            bool state2;
+            foreach (GardenDTO g in _gardenRepository.Get())
+            {
+                 state = _gardensensorRepository.RemoveGardenSensorByIdSensor(dto.IdSensor, g.IdGarden);
+            }
+            state2 = _sensorRepository.Remove(dto);
+
             return state2;
         }
     }

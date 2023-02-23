@@ -82,22 +82,6 @@ namespace BL
             return state;
         }
 
-        public bool RemoveGardenSensorByIdSensor(int idSensor)
-        {
-            /* var gardenSensors = this.GetByIdSensor(idSensor);
-             var state = false;
-             foreach (GardenSensorDTO gs in gardenSensors)
-             {
-                 foreach(GardenDTO g in _gardenService.Get())
-                 {
-                     state = this.Remove(gs, g.IdGarden);
-
-                 }
-
-             }*/
-            return true;
-        }
-
 
     }
 }

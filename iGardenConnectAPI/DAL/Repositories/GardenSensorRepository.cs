@@ -71,7 +71,8 @@ namespace DAL.Repositories
         }
         public IEnumerable<GardenSensorDTO> GetByIdSensor(int idSensor)
         {
-            return _dbcontext.GardenSensors.ToList().Where(s => s.IdSensor == idSensor).Select(s => s.ToDTO());
+            var gardenSensors =  _dbcontext.GardenSensors.ToList().Where(s => s.IdSensor == idSensor).Select(s => s.ToDTO());
+            return gardenSensors;
         }
         public bool Update(GardenSensorDTO gardenSensorDTO, string idGarden, string value)
         {
@@ -126,6 +127,22 @@ namespace DAL.Repositories
 
 
         #endregion
+        
+        public bool RemoveGardenSensorByIdSensor(int idSensor, string idGarden)
+        {
+
+            var gardenSensors = GetByIdSensor(idSensor);
+            var state = false;
+
+            foreach (GardenSensorDTO g in gardenSensors)
+            {
+                state = Remove(g,idGarden);
+
+            }
+
+
+            return state;
+        }
 
 
 
