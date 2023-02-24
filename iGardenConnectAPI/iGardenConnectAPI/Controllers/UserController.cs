@@ -45,11 +45,15 @@ namespace iGardenConnectAPI.Controllers
 
         [HttpGet]
         [Route("{login}")]
-        public UserVM Get(string login)
+        public ActionResult Get(string login)
         {
-            var UserDTO = _userService.GetByLogin(login);
+            var userDTO = _userService.GetByLogin(login);
+            if(userDTO == null)
+            {
+                return NotFound();
+            }
 
-            return UserDTO.ToVM();
+            return Ok(userDTO.ToVM());
         }
 
         #endregion
@@ -58,12 +62,14 @@ namespace iGardenConnectAPI.Controllers
         #region POST
         [HttpPost]
         [Route("")]
-        public bool Add(UserVM userVM)
+        public ActionResult Add(UserVM userVM)
         {
             var state = _userService.Add(userVM.ToDTO());
-            return state;
+            if (!state) return NotFound();
+            return Ok(state);
         }
         #endregion
+
 
 
         #region POST

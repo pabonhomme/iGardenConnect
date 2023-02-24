@@ -2,6 +2,7 @@
 using DAL.Interfaces;
 using DAL.Models;
 using DTO;
+using BC = BCrypt.Net.BCrypt;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,7 @@ namespace DAL.Repositories
                 }
                 else
                 {
+                    entity.Password = BC.HashPassword(entity.Password);
                     _dbcontext.Add(entity);
                     _dbcontext.SaveChanges();
                     state = true;
@@ -70,9 +72,22 @@ namespace DAL.Repositories
         }
 
         public UserDTO CheckCredentials(UserDTO user)
-        {;
+        {
             var userDTO = _dbcontext.Users.SingleOrDefault(u => u.Login == user.Login).ToDTO();
             return userDTO;
+        }
+
+        public bool Authenticate(UserDTO account)
+        {
+            //get account user from database
+            var userDTO = CheckCredentials(account);
+
+            //check account found and verify password;
+            if(userDTO == null || !BC.Verify(userDTO.Password, account.Password))
+            {
+                return false; //authentication failed
+            }
+            return true; // authentication successful
         }
         public bool Remove(UserDTO userDTO)
         {
