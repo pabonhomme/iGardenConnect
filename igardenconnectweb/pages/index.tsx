@@ -16,19 +16,32 @@ import {
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const bcrypt = require("bcryptjs");
+  const saltRounds = 10;
+  const password = "test";
+  const hashedPassword = bcrypt.hashSync(password, saltRounds);
+
+  // Comparer les deux valeurs de hachage pour vérifier si elles correspondent
+  const passwordsMatch = bcrypt.compareSync("test", hashedPassword);
+
+  if (passwordsMatch) {
+    console.log("true");
+  } else {
+    console.log("false");
+  }
+
+  console.log(hashedPassword);
+
   return (
     <>
-      <CustomHeader/>
+      <CustomHeader />
       <main className={styles.main}>
         <header>
-          <CustomNavbar/>
+          <CustomNavbar />
         </header>
-        <hr/>
+        <hr />
 
-        <div
-          className="container-fluid p-5"
-          id="Presentation"
-        >
+        <div className="container-fluid p-5" id="Presentation">
           <h1 className="display-4 font-weight-bold text-center">
             Bienvenue sur iGardenConnect
           </h1>
@@ -38,7 +51,13 @@ export default function Home() {
         </div>
 
         <div className="containerGarden">
-        <Image className="garden" src="/jardin.jpg" alt="jardin" width="700" height="700"/>
+          <Image
+            className="garden"
+            src="/jardin.jpg"
+            alt="jardin"
+            width="700"
+            height="700"
+          />
         </div>
       </main>
     </>
