@@ -23,7 +23,10 @@ namespace DAL.Extensions
                 IdPlant = dto.IdPlant,
                 Name = dto.Name,
                 Species = dto.Species,
-                WateringInterval = dto.WateringInterval,
+                OptimalTemperature = dto.OptimalTemperature,
+                SoilMoisture = dto.SoilMoisture,
+                AirMoisture = dto.AirMoisture,
+                Light = dto.Light,
             };
         }
 
@@ -39,7 +42,10 @@ namespace DAL.Extensions
                 IdPlant = entity.IdPlant,
                 Name = entity.Name,
                 Species = entity.Species,
-                WateringInterval = entity.WateringInterval,
+                OptimalTemperature = entity.OptimalTemperature,
+                SoilMoisture = entity.SoilMoisture,
+                AirMoisture = entity.AirMoisture,
+                Light = entity.Light,
             };
         }
     }

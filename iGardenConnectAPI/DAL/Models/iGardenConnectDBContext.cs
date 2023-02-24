@@ -52,6 +52,8 @@ namespace DAL.Models
 
                 entity.Property(e => e.Watered).HasColumnName("watered");
 
+                entity.Property(e => e.WateringDuration).HasColumnName("wateringDuration");
+
                 entity.HasOne(d => d.IdPlantNavigation)
                     .WithMany(p => p.Gardens)
                     .HasForeignKey(d => d.IdPlant)
@@ -107,19 +109,23 @@ namespace DAL.Models
 
                 entity.Property(e => e.IdPlant).HasColumnName("idPlant");
 
+                entity.Property(e => e.AirMoisture).HasColumnName("airMoisture");
+
+                entity.Property(e => e.Light).HasColumnName("light");
+
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
                     .HasColumnName("name")
                     .IsFixedLength();
 
+                entity.Property(e => e.OptimalTemperature).HasColumnName("optimalTemperature");
+
+                entity.Property(e => e.SoilMoisture).HasColumnName("soilMoisture");
+
                 entity.Property(e => e.Species)
                     .HasMaxLength(100)
                     .HasColumnName("species")
                     .IsFixedLength();
-
-                entity.Property(e => e.WateringInterval)
-                    .HasColumnType("datetime")
-                    .HasColumnName("watering_interval");
             });
 
             modelBuilder.Entity<Sensor>(entity =>
@@ -164,11 +170,6 @@ namespace DAL.Models
                 entity.Property(e => e.Login)
                     .HasMaxLength(100)
                     .HasColumnName("login")
-                    .IsFixedLength();
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(100)
-                    .HasColumnName("name")
                     .IsFixedLength();
 
                 entity.Property(e => e.Password)

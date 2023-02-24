@@ -16,7 +16,6 @@ namespace VM.Extensions
                 return new UserVM
                 {
                     IdUser = dto.IdUser,
-                    Name = dto.Name,
                     Login = dto.Login,
                     Role = dto.Role,
                     Password = dto.Password,
@@ -32,7 +31,6 @@ namespace VM.Extensions
                 return new UserDTO
                 {
                     IdUser = vm.IdUser,
-                    Name = vm.Name,
                     Login = vm.Login,
                     Role = vm.Role,
                     Password = vm.Password,
