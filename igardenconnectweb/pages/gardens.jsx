@@ -2,47 +2,64 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import { getUserByToken } from "../utils/cookie";
-import { UserVM } from "@/model/UserVM";
+import GardenCard from "../components/GardenCard";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Gardens() {
-  // const [user, setUser] = useState(null); // null to verify if it worked before getting all vms
+  const [user, setUser] = useState(null); // null to verify if it worked before getting all gardens
+  const [gardens, setGardens] = useState([]);
+
+  async function getAllGardens(user) {
+    // get cookie
+    if (document.cookie) {
+      // get cookie
+      const sessionCookie = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("sessionCookie="));
+      const cookieValue = sessionCookie.split("=")[1];
+      console.log(user.idUser);
+      const response = await fetch(
+        `http://localhost:5241/api/Garden/user/${user.idUser}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `${cookieValue}`,
+          },
+        }
+      );
+      const data = await response.json();
+      return data;
+    }
+  }
+
+  async function getUserAndGardens() {
+    const user = await getUserByToken(); // getting the user by token
+    const gardens = await getAllGardens(user);
+    return { user, gardens };
+  }
+
+  useEffect(() => {
+    getUserAndGardens()
+      .then(({ user, gardens }) => {
+        setUser(user);
+        let allGardens = [];
+        console.log(gardens);
+        gardens.map((garden) => {
+          allGardens.push(<GardenCard garden={garden} />);
+        });
+        setGardens(allGardens);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   // useEffect(() => {
-  //   async function fetchUser() {
-  //     const user = await getUserByToken(); // getting the user by token
-  //     setUser(user);
-  //   }
-  //   fetchUser(); // calling the function
-  // }, []);
 
-  // async function getAllGardens(user) {
-  //   return new Promise((resolve, reject) => {
-  //     // get cookie
-  //     if (document.cookie) {
-  //       // get cookie
-  //       const sessionCookie = document.cookie
-  //         .split("; ")
-  //         .find((row) => row.startsWith("sessionCookie="));
-  //       const cookieValue = sessionCookie.split("=")[1];
-  //       fetch(`http://localhost:5241/api/Garden/user/${user.idUser}`, {
-  //         method: "GET",
-  //         headers: {
-  //           Authorization: `${cookieValue}`,
-  //         },
-  //       })
-  //         .then((response) => response.json())
-  //         .then((data) => {
-  //           resolve(data);
-  //         })
-  //         .catch((error) => {
-  //           reject(error);
-  //         });
-  //     }
-  //   });
-  // }
+  // }, []);
 
   return (
     <>
@@ -57,7 +74,8 @@ export default function Gardens() {
 
         <Container className="gardensContainer mt-4">
           <Container className="gridgardens p-5">
-            <Row className="justify-content-md-center">
+            {gardens}
+            {/* <Row className="justify-content-md-center">
               <Col>
                 <div className="cardgardens">
                   <Row>
@@ -180,7 +198,7 @@ export default function Gardens() {
                   </Row>
                 </div>
               </Col>
-            </Row>
+            </Row> */}
           </Container>
           <Button className="submit-button-gardens bg-secondary" type="submit">
             Ajouter un jardin

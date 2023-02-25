@@ -11,7 +11,6 @@ export function setSessionCookie(user) {
     })
     .then((cookie) => {
       // Ajouter le cookie à document.cookie
-      console.log(cookie);
       document.cookie = `sessionCookie=${cookie.value};expires=${cookie.expires};path=/`;
     })
     .catch((error) => {
@@ -23,7 +22,6 @@ export async function getUserByToken() {
   return new Promise(async (resolve, reject) => {
     let user = new UserVM();
     if (document.cookie) {
-      console.log(document.cookie);
       // get cookie
       const sessionCookie = document.cookie
         .split("; ")
@@ -38,7 +36,6 @@ export async function getUserByToken() {
         if (response.status === 200) {
           user = response.json();
         }
-        console.log(user);
       }
     }
     resolve(user);

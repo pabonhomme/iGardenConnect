@@ -26,7 +26,8 @@ export default function CreateAccount() {
   function onsubmit(event) {
     event.preventDefault();
     // create user object
-    const user = new UserVM(0, "Paul", login, "user", bcrypt.hashSync(password, 10))
+    const user = new UserVM(0, login, "user", bcrypt.hashSync(password, 10));
+    console.log(user);
     // send post request to port 8001
     fetch('http://localhost:5241/api/User', {
         method: 'POST',
@@ -34,7 +35,9 @@ export default function CreateAccount() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
-    }).then(response => console.log(response));
+    }).then(response =>{
+      window.location.href = "http://localhost:3000/login";
+    });
   }
 
   return (

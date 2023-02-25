@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import CustomNavbar from "../components/CustomNavbar";
-import CustomHeader from "../components/CustomHeader";
 import {
   Container,
   Carousel,
@@ -15,7 +13,7 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ login }: { login?: string }) {
+export default function Home() {
   return (
     <>
       <main className={styles.main}>

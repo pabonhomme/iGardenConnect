@@ -49,14 +49,12 @@ export default function Login() {
     })
       .then((response) => {
         if (response.ok) {
-          console.log(response);
           return response.json(); // récupérer les données JSON dans la réponse
         } else {
           throw new Error("User not found");
         }
       })
       .then((userData) => {
-        console.log(userData);
         // créer une instance de UserVM à partir des données JSON récupérées
         const user = new UserVM(
           userData.idUser,
@@ -64,7 +62,6 @@ export default function Login() {
           userData.role,
           userData.password
         );
-        console.log(user);
         if (bcrypt.compareSync(password, user.password)) {
           // const sessionCookie = generateNewCookie(user.idUser, user.login);
           // document.cookie = `sessionCookie=${sessionCookie}; max-age=86400`;
