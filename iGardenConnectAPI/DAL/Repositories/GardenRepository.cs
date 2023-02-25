@@ -28,7 +28,17 @@ namespace DAL.Repositories
         public IEnumerable<GardenDTO> Get(int idUser)
         {
 
-            return _dbcontext.Gardens.ToList().Where(g => g.IdUser == idUser).Select(g => g.ToSmallDTO()).ToList();
+            var gardens = _dbcontext.Gardens.ToList().Where(g => g.IdUser == idUser).ToList();
+            IEnumerable<GardenDTO> gardensDTO = new List<GardenDTO>();
+            foreach (Garden g in gardens)
+            {
+
+                Plant p = _dbcontext.Plants.FirstOrDefault(p => p.IdPlant == g.IdPlant);
+                GardenDTO gDTO = g.ToDTO();
+                gDTO.Plant = p.ToDTO();
+                gardensDTO = gardensDTO.Concat(new[] { gDTO });
+            }
+            return gardensDTO;
         }
 
         public GardenDTO Get(string id)
@@ -38,8 +48,6 @@ namespace DAL.Repositories
             GardenDTO gDTO = g.ToDTO();
             gDTO.Plant = plant.ToDTO();
             return gDTO;
-
-
 
         }
         public bool Add(GardenDTO dto, int idUser, int idPlant)

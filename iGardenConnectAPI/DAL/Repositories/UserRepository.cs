@@ -55,7 +55,6 @@ namespace DAL.Repositories
                 }
                 else
                 {
-                    entity.Password = BC.HashPassword(entity.Password);
                     _dbcontext.Add(entity);
                     _dbcontext.SaveChanges();
                     state = true;
