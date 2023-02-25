@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,10 @@ namespace BL.Interfaces
         public bool Add(UserDTO dto);
         public bool Update(UserDTO USERDTO);
         public bool Remove(UserDTO user);
+        public Cookie GenerateCookie(int idUser);
+        public bool ValidateToken(string token);
+        public string DecodeJwtToken(string token);
+        public UserDTO GetUserFromToken(string token);
 
     }
 }

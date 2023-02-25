@@ -55,8 +55,21 @@ namespace iGardenConnectAPI.Controllers
 
             return Ok(userDTO.ToVM());
         }
+        [HttpGet]
+        [Route("cookie/{idUser}")]
+        public ActionResult GenerateCookie(int idUser)
+        {
+            var cookie = _userService.GenerateCookie(idUser);
+            if (cookie == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(cookie);
+        }
 
         #endregion
+
 
 
         #region POST
@@ -67,6 +80,16 @@ namespace iGardenConnectAPI.Controllers
             var state = _userService.Add(userVM.ToDTO());
             if (!state) return NotFound();
             return Ok(state);
+        }
+
+
+        [HttpPost]
+        [Route("cookie/{token}")]
+        public ActionResult GetUserFromToken(string token)
+        {
+            var userVM = _userService.GetUserFromToken(token).ToVM();
+            if (userVM == null) return NotFound();
+            return Ok(userVM);
         }
         #endregion
 
@@ -102,6 +125,8 @@ namespace iGardenConnectAPI.Controllers
             return Ok();
         }
         #endregion
+
+        
 
         #region DELETE
         [HttpDelete]

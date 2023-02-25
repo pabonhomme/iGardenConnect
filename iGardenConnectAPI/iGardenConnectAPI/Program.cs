@@ -34,10 +34,6 @@ builder.Services.AddScoped<IGardenSensorService, GardenSensorService>();
 
 
 
-
-
-
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -53,6 +49,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+// Allow CORS
+app.UseCors(builder => builder
+    .WithOrigins("http://localhost:3000") // Add your allowed origins here
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.UseAuthorization();
 

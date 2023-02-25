@@ -23,8 +23,8 @@ namespace DAL.Extensions
             {
                
                 IdSensor = (int)dto.IdSensor,
-                Value = dto.Value,
-                State = dto.State,
+                Value = dto.Value.Trim(),
+                State = dto.State.Trim(),
                 
             };
         }
@@ -40,8 +40,8 @@ namespace DAL.Extensions
             {
                
                 IdSensor = entity.IdSensor,
-                Value = entity.Value,
-                State = entity.State,
+                Value = entity.Value.Trim(),
+                State = entity.State.Trim(),
             };
         }
     

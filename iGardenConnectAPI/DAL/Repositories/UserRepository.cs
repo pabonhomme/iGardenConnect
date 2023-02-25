@@ -100,13 +100,11 @@ namespace DAL.Repositories
                 {
                     _dbcontext.Entry(entity).State = EntityState.Modified;
                 }
-                if(!_dbcontext.Users.Any(u => u.IdUser == entity.IdUser))
-                {
                     _dbcontext.Users.Remove(entity);
                     _dbcontext.SaveChanges();
                     state = true;
 
-                }
+               
 
 
             }

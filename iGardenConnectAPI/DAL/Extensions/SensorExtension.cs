@@ -20,10 +20,10 @@ namespace DAL.Extensions
             var sensor = new Sensor()
             {
                 
-                Name = dto.Name,
-                Type = dto.Type,
-                Brand = dto.Brand,
-                Price = dto.Price,
+                Name = dto.Name.Trim(),
+                Type = dto.Type.Trim(),
+                Brand = dto.Brand.Trim(),
+                Price = dto.Price.Trim(),
             };
             if(action == 1) //if update
             {
@@ -42,10 +42,10 @@ namespace DAL.Extensions
             return new SensorDTO
             {
                 IdSensor = (int)entity.IdSensor,
-                Name = entity.Name,
-                Type = entity.Type,
-                Brand = entity.Brand,
-                Price= entity.Price,
+                Name = entity.Name.Trim(),
+                Type = entity.Type.Trim(),
+                Brand = entity.Brand.Trim(),
+                Price= entity.Price.Trim(),
             };
         }
     }
