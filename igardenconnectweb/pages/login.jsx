@@ -2,33 +2,36 @@ import React, { FormEvent } from "react";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
+import { setSessionCookie } from "../utils/cookie";
 
 import { useState } from "react";
 import CustomNavbar from "../components/CustomNavbar";
 import CustomHeader from "../components/CustomHeader";
 import { Form, Button, Container } from "react-bootstrap";
+import { UserVM } from "../model/UserVM";
 
 export default function Login() {
-  let username = "";
-  let email = "";
+  let login = "";
   let password = "";
+  const user = new UserVM();
+  const bcrypt = require("bcryptjs");
 
   const [loading, setLoading] = useState(false);
 
-  function showError(id) {
-    document.getElementById(id).classList.add("shake");
-    document.getElementById(id).innerHTML = "Error";
-    setTimeout(() => {
-      document.getElementById(id).classList.remove("shake");
-    }, 500);
+  // function showError(id) {
+  //   document.getElementById(id).classList.add("shake");
+  //   document.getElementById(id).innerHTML = "Error";
+  //   setTimeout(() => {
+  //     document.getElementById(id).classList.remove("shake");
+  //   }, 500);
 
-    setTimeout(() => {
-      document.getElementById(id).innerHTML = "";
-    }, 5000);
-  }
+  //   setTimeout(() => {
+  //     document.getElementById(id).innerHTML = "";
+  //   }, 5000);
+  // }
 
-  function handleUsernameChange(event) {
-    username = event.target.value;
+  function handleLoginChange(event) {
+    login = event.target.value;
   }
 
   function handlePasswordChange(event) {
@@ -36,52 +39,49 @@ export default function Login() {
   }
 
   function onsubmit(event) {
-    // event.preventDefault();
-    // const user = {
-    //   username: username,
-    //   passwd: password,
-    // };
-    // setLoading(true);
-    // fetch("http://localhost:8001/api/users/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(user),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     try {
-    //       const sessionCookie = data.cookie;
-    //       document.cookie = `sessionCookie=${sessionCookie.value}; max-age=86400`;
-    //       window.location.href = "http://localhost:3000/home";
-    //     } catch (error) {
-    //       showError("error");
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   });
-  }
+    event.preventDefault();
 
-  //   if (loading) {
-  //     return (
-  //       <>
-  //         <div className="loading-container">
-  //           <div className="lds-dual-ring"></div>
-  //           <div className="loading">Loading...</div>
-  //           <div className="error" id="error"></div>
-  //         </div>
-  //       </>
-  //     );
-  //   }
+    fetch(`http://localhost:5241/api/User/auth/${login}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log(response);
+          return response.json(); // récupérer les données JSON dans la réponse
+        } else {
+          throw new Error("User not found");
+        }
+      })
+      .then((userData) => {
+        console.log(userData);
+        // créer une instance de UserVM à partir des données JSON récupérées
+        const user = new UserVM(
+          userData.idUser,
+          userData.login,
+          userData.role,
+          userData.password
+        );
+        console.log(user);
+        if (bcrypt.compareSync(password, user.password)) {
+          // const sessionCookie = generateNewCookie(user.idUser, user.login);
+          // document.cookie = `sessionCookie=${sessionCookie}; max-age=86400`;
+          setSessionCookie(user);
+          window.location.href = "http://localhost:3000/";
+        } else {
+          throw new Error("Password is wrong");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   return (
     <>
-      <CustomHeader />
       <main className={styles.main}>
-        <header>
-          <CustomNavbar />
-        </header>
         <hr />
         <div className="login-container p-5">
           <h2>Se connecter</h2>
@@ -94,7 +94,7 @@ export default function Login() {
                 className="inputText"
                 type="text"
                 placeholder="mon pseudo"
-                onChange={handleUsernameChange}
+                onChange={handleLoginChange}
               />
             </Form.Group>
 
@@ -121,9 +121,9 @@ export default function Login() {
           <Container className="mt-4">
             <h6>Pas encore de compte ?</h6>
             <Link href="/createAccount">
-                <Button className="submit-button-createAccount-connexion bg-secondary">
-                  Créer un compte
-                </Button>
+              <Button className="submit-button-createAccount-connexion bg-secondary">
+                Créer un compte
+              </Button>
             </Link>
           </Container>
         </div>

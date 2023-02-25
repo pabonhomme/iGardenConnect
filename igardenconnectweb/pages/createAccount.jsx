@@ -11,6 +11,7 @@ import { UserVM } from "../model/UserVM"
 export default function CreateAccount() {
   let login = "";
   let password = "";
+  const bcrypt = require("bcryptjs");
 
   function handleLoginChange(event) {
     login = event.target.value;
@@ -25,7 +26,7 @@ export default function CreateAccount() {
   function onsubmit(event) {
     event.preventDefault();
     // create user object
-    const user = new UserVM(0, "Paul", login, "user", password)
+    const user = new UserVM(0, "Paul", login, "user", bcrypt.hashSync(password, 10))
     // send post request to port 8001
     fetch('http://localhost:5241/api/User', {
         method: 'POST',
@@ -38,11 +39,7 @@ export default function CreateAccount() {
 
   return (
     <>
-      <CustomHeader />
       <main className={styles.main}>
-        <header>
-          <CustomNavbar />
-        </header>
         <hr />
         <div className="login-container p-5">
           <h2>Créer mon compte</h2>

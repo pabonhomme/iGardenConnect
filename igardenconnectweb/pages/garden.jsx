@@ -34,9 +34,7 @@ export default function Garden() {
 
   return (
     <>
-      <CustomHeader />
       <main className={styles.main}>
-        <CustomNavbar />
         <hr />
         <Container className="my-5">
           <h1 className="text-center mb-4">{garden.name}</h1>

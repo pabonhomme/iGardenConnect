@@ -18,11 +18,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function AddGarden() {
   return (
     <>
-      <CustomHeader />
       <main className={styles.main}>
-        <header>
-          <CustomNavbar />
-        </header>
         <hr />
 
         <div className="container-fluid p-5 mt-5" id="Presentation">

@@ -1,25 +1,52 @@
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import CustomNavbar from "./components/CustomNavbar";
-import CustomHeader from "./components/CustomHeader";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-} from "react-bootstrap";
+import { getUserByToken } from "../utils/cookie";
+import { UserVM } from "@/model/UserVM";
+import { Container, Row, Col, Button } from "react-bootstrap";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Gardens() {
+  // const [user, setUser] = useState(null); // null to verify if it worked before getting all vms
+
+  // useEffect(() => {
+  //   async function fetchUser() {
+  //     const user = await getUserByToken(); // getting the user by token
+  //     setUser(user);
+  //   }
+  //   fetchUser(); // calling the function
+  // }, []);
+
+  // async function getAllGardens(user) {
+  //   return new Promise((resolve, reject) => {
+  //     // get cookie
+  //     if (document.cookie) {
+  //       // get cookie
+  //       const sessionCookie = document.cookie
+  //         .split("; ")
+  //         .find((row) => row.startsWith("sessionCookie="));
+  //       const cookieValue = sessionCookie.split("=")[1];
+  //       fetch(`http://localhost:5241/api/Garden/user/${user.idUser}`, {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: `${cookieValue}`,
+  //         },
+  //       })
+  //         .then((response) => response.json())
+  //         .then((data) => {
+  //           resolve(data);
+  //         })
+  //         .catch((error) => {
+  //           reject(error);
+  //         });
+  //     }
+  //   });
+  // }
+
   return (
     <>
-      <CustomHeader />
       <main className={styles.main}>
-        <header>
-          <CustomNavbar />
-        </header>
         <hr />
 
         <div className="container-fluid p-5 mt-5" id="Presentation">
