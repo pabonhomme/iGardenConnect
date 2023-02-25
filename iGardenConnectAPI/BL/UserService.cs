@@ -135,7 +135,15 @@ namespace BL
         }
         public UserDTO GetUserFromToken(string token)
         {
-            throw new NotImplementedException();
+            UserDTO userDTO = null;
+            bool isValidated = ValidateToken(token);
+
+            if(isValidated)
+            {
+               var idUser = DecodeJwtToken(token);
+               userDTO = Get(int.Parse(idUser));
+            }
+            return userDTO;
         }
 
         public string DecodeJwtToken(string token)

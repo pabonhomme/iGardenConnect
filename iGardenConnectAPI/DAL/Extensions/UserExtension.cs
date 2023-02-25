@@ -20,9 +20,9 @@ namespace DAL.Extensions
             return new User
             {
                 IdUser = dto.IdUser,
-                Login = dto.Login,
-                Role = dto.Role,
-                Password = dto.Password,
+                Login = dto.Login.Trim(),
+                Role = dto.Role.Trim(),
+                Password = dto.Password.Trim(),
 
             };
         }
@@ -37,9 +37,9 @@ namespace DAL.Extensions
             return new UserDTO
             {
                 IdUser = entity.IdUser,
-                Login = entity.Login,
-                Role = entity.Role,
-                Password = entity.Password,
+                Login = entity.Login.Trim(),
+                Role = entity.Role.Trim(),
+                Password = entity.Password.Trim(),
             };
         }
     }

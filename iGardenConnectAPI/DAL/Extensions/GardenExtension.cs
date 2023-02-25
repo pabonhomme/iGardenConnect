@@ -21,8 +21,8 @@ namespace DAL.Extensions
 
             return new Garden
             {
-                IdGarden = dto.IdGarden,
-                Name = dto.Name,
+                IdGarden = dto.IdGarden.Trim(),
+                Name = dto.Name.Trim(),
                 Watered = dto.Watered,
                 LastWatered = dto.LastWatered,
                 IdPlant = dto.Plant.IdPlant,
@@ -43,8 +43,8 @@ namespace DAL.Extensions
 
             return new GardenDTO
             {
-                IdGarden = entity.IdGarden,
-                Name = entity.Name,
+                IdGarden = entity.IdGarden.Trim(),
+                Name = entity.Name.Trim(),
                 Watered = entity.Watered,
                 LastWatered = entity.LastWatered,
                 Plant = new PlantDTO(),

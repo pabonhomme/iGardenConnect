@@ -21,8 +21,8 @@ namespace DAL.Extensions
             return new Plant
             {
                 IdPlant = dto.IdPlant,
-                Name = dto.Name,
-                Species = dto.Species,
+                Name = dto.Name.Trim(),
+                Species = dto.Species.Trim(),
                 OptimalTemperature = dto.OptimalTemperature,
                 SoilMoisture = dto.SoilMoisture,
                 AirMoisture = dto.AirMoisture,
@@ -40,8 +40,8 @@ namespace DAL.Extensions
             return new PlantDTO
             {
                 IdPlant = entity.IdPlant,
-                Name = entity.Name,
-                Species = entity.Species,
+                Name = entity.Name.Trim(),
+                Species = entity.Species.Trim(),
                 OptimalTemperature = entity.OptimalTemperature,
                 SoilMoisture = entity.SoilMoisture,
                 AirMoisture = entity.AirMoisture,

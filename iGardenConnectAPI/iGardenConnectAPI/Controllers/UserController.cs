@@ -87,8 +87,9 @@ namespace iGardenConnectAPI.Controllers
         [Route("cookie/{token}")]
         public ActionResult GetUserFromToken(string token)
         {
-            var state = _userService.ValidateToken(token);
-            return Ok(state);
+            var userVM = _userService.GetUserFromToken(token).ToVM();
+            if (userVM == null) return NotFound();
+            return Ok(userVM);
         }
         #endregion
 
