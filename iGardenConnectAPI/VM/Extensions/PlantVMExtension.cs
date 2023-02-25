@@ -20,6 +20,10 @@ namespace VM.Extensions
                     Name = dto.Name,
                     Species = dto.Species,
                     WateringInterval = dto.WateringInterval,
+                    OptimalTemperature = dto.OptimalTemperature,
+                    SoilMoisture = dto.SoilMoisture,
+                    AirMoisture = dto.AirMoisture,
+                    Light = dto.Light,
                 };
             }
             return null;
@@ -35,6 +39,10 @@ namespace VM.Extensions
                     Name = vm.Name,
                     Species = vm.Species,
                     WateringInterval = vm.WateringInterval,
+                    OptimalTemperature = vm.OptimalTemperature,
+                    SoilMoisture = vm.SoilMoisture,
+                    AirMoisture = vm.AirMoisture,
+                    Light = vm.Light,
                 };
             }
 

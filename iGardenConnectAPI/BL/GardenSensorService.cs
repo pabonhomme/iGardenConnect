@@ -56,10 +56,9 @@ namespace BL
             var sensors = _sensorService.Get();
             return _gardenSensorRepository.Add(idGarden, sensors);
         }
-
-        public bool Add(string idGarden, int idSensor)
+        public bool AddGardenSensor(string idGarden, int idSensor)
         {
-            throw new NotImplementedException();
+            return _gardenSensorRepository.AddGardenSensor(idGarden, idSensor);
         }
         public bool Update(string idGarden, int idSensor, string value)
         {
@@ -82,22 +81,9 @@ namespace BL
             return state;
         }
 
-        public bool RemoveGardenSensorByIdSensor(int idSensor)
+        public bool Add(string idGarden, int idSensor)
         {
-            /* var gardenSensors = this.GetByIdSensor(idSensor);
-             var state = false;
-             foreach (GardenSensorDTO gs in gardenSensors)
-             {
-                 foreach(GardenDTO g in _gardenService.Get())
-                 {
-                     state = this.Remove(gs, g.IdGarden);
-
-                 }
-
-             }*/
-            return true;
+            throw new NotImplementedException();
         }
-
-
     }
 }

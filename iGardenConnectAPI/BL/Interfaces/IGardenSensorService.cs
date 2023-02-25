@@ -24,12 +24,11 @@ namespace BL.Interfaces
         /// <param name="idGarden"></param>
         /// <param name="idSensor"></param>
         /// <returns></returns>
-        public bool Add(string idGarden, int idSensor);
+        public bool AddGardenSensor(string idGarden, int idSensor);
 
         public bool Update(string idGarden, int idSensor, string value);
         public bool Remove(GardenSensorDTO gardenSensorDTO, string idGarden);
         public bool RemoveGardenSensors(IEnumerable<GardenSensorDTO> gardenSensors, string IdGarden);
-        public bool RemoveGardenSensorByIdSensor(int idSensor);
 
     }
 }

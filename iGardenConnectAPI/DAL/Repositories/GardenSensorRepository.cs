@@ -20,6 +20,38 @@ namespace DAL.Repositories
             _dbcontext = dbcontext;
         }
 
+
+        public IEnumerable<GardenSensorDTO> Get(string idGarden)
+        {
+            return _dbcontext.GardenSensors.ToList().Where(s => s.IdGarden == idGarden).ToList().Select(s => s.ToDTO()).ToList();
+
+        }
+        /// <summary>
+        /// get the garden sensor
+        /// </summary>
+        /// <param name="idGarden"></param>
+        /// <param name="idSensor"></param>
+        /// <returns>GardenSensorDTO </returns>
+        public GardenSensorDTO Get(string idGarden, SensorDTO sensor)
+        {
+            GardenSensorDTO g = _dbcontext.GardenSensors.ToList().Where(s => s.IdGarden == idGarden).FirstOrDefault(s => s.IdSensor == sensor.IdSensor).ToDTO();
+            g.Name = sensor.Name;
+            g.Type = sensor.Type;
+            g.Brand = sensor.Brand;
+            g.Price = sensor.Price;
+            return g;
+        }
+        public IEnumerable<GardenSensorDTO> GetByIdSensor(int idSensor)
+        {
+            var gardenSensors =  _dbcontext.GardenSensors.ToList().Where(s => s.IdSensor == idSensor).Select(s => s.ToDTO()).ToList();
+            return gardenSensors;
+        }
+        public GardenSensorDTO GetByGardenIdSensor(int idSensor, string idGarden)
+        {
+            var gardenSensor = _dbcontext.GardenSensors.ToList().FirstOrDefault(s => s.IdSensor == idSensor && s.IdGarden == idGarden).ToDTO();
+            return gardenSensor;
+        }
+
         public bool Add(string idGarden, IEnumerable<SensorDTO> sensors)
         {
             try
@@ -48,30 +80,35 @@ namespace DAL.Repositories
 
             return false;
         }
-
-        public IEnumerable<GardenSensorDTO> Get(string idGarden)
-        {
-            return _dbcontext.GardenSensors.ToList().Where(s => s.IdGarden == idGarden).ToList().Select(s => s.ToDTO()).ToList();
-
-        }
         /// <summary>
-        /// get the garden sensor
+        /// Attach new sensor to a Garden by admin
         /// </summary>
         /// <param name="idGarden"></param>
         /// <param name="idSensor"></param>
-        /// <returns>GardenSensorDTO </returns>
-        public GardenSensorDTO Get(string idGarden, SensorDTO sensor)
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public bool AddGardenSensor(string idGarden, int idSensor)
         {
-            GardenSensorDTO g = _dbcontext.GardenSensors.ToList().Where(s => s.IdGarden == idGarden).FirstOrDefault(s => s.IdSensor == sensor.IdSensor).ToDTO();
-            g.Name = sensor.Name;
-            g.Type = sensor.Type;
-            g.Brand = sensor.Brand;
-            g.Price = sensor.Price;
-            return g;
-        }
-        public IEnumerable<GardenSensorDTO> GetByIdSensor(int idSensor)
-        {
-            return _dbcontext.GardenSensors.ToList().Where(s => s.IdSensor == idSensor).Select(s => s.ToDTO());
+            try
+            {
+                GardenSensor entity = new GardenSensor();
+                entity.IdGarden = idGarden;
+                entity.IdSensor = idSensor;
+                entity.Value = "13";
+                entity.State = "OFF";
+
+                _dbcontext.Add(entity);
+                _dbcontext.SaveChanges();
+
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
         }
         public bool Update(GardenSensorDTO gardenSensorDTO, string idGarden, string value)
         {
@@ -126,8 +163,18 @@ namespace DAL.Repositories
 
 
         #endregion
+        
+        public bool RemoveGardenSensorByIdSensor(int idSensor, string idGarden)
+        {
+
+            var gs = GetByGardenIdSensor(idSensor, idGarden);
+            var state = false;
 
 
+            state = Remove(gs, idGarden);
+
+            return state;
+        }
 
     }
 }

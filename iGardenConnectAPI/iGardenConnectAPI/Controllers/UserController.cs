@@ -42,26 +42,64 @@ namespace iGardenConnectAPI.Controllers
 
             return UserDTO.ToVM();
         }
+
+        [HttpGet]
+        [Route("{login}")]
+        public ActionResult Get(string login)
+        {
+            var userDTO = _userService.GetByLogin(login);
+            if(userDTO == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userDTO.ToVM());
+        }
+
         #endregion
 
 
         #region POST
         [HttpPost]
         [Route("")]
-        public bool Add(UserVM UserVM)
+        public ActionResult Add(UserVM userVM)
         {
-            var state = _userService.Add(UserVM.ToDTO());
-            return state;
+            var state = _userService.Add(userVM.ToDTO());
+            if (!state) return NotFound();
+            return Ok(state);
+        }
+        #endregion
+
+
+
+        #region POST
+        [HttpPost]
+        [Route("auth/")]
+        public ActionResult AuthUser(UserVM userVM)
+        {
+            var authUser = _userService.CheckCredentials(userVM.ToDTO());
+
+          //  var mdpHashBDD = "$2a$10$WrabqmxfA1qzcOT4fGx7JuIzWnZQsDvDCuL/62RF4nUORVD5cj7tO";
+            if (authUser == null)
+            {
+                return NotFound();
+            }
+            if (authUser != null && !BCrypt.Net.BCrypt.Verify(userVM.Password, authUser.Password))
+            {
+                return BadRequest("Incorrect Password! Please check your password!");
+            }
+            return Ok();
         }
         #endregion
 
         #region PUT
         [HttpPut]
         [Route("")]
-        public bool Update(UserVM UserVM)
+        public ActionResult Update(UserVM UserVM)
         {
             var state = _userService.Update(UserVM.ToDTO());
-            return state;
+            if (!state) return BadRequest(state);
+            return Ok();
         }
         #endregion
 

@@ -18,11 +18,6 @@ namespace BL
             _userRepository = userRepository;
         }
 
-        public bool Add(UserDTO dto)
-        {
-            return _userRepository.Add(dto);
-        }
-
         #region GET
         /// <summary>
         /// Get all plants
@@ -38,15 +33,31 @@ namespace BL
             return _userRepository.Get(id);
         }
 
-        public bool Remove(UserDTO user)
+        public UserDTO GetByLogin(string login)
         {
-            return _userRepository.Remove(user);
+            return _userRepository.GetByLogin(login);
+        }
+
+        public bool Add(UserDTO dto)
+        {
+            return _userRepository.Add(dto);
         }
 
         public bool Update(UserDTO userDTO)
         {
             return _userRepository.Update(userDTO);
         }
+        public bool Remove(UserDTO user)
+        {
+            return _userRepository.Remove(user);
+        }
+
+        public UserDTO CheckCredentials(UserDTO user)
+        {
+            return _userRepository.CheckCredentials(user);
+        }
+
+
         #endregion
     }
 }

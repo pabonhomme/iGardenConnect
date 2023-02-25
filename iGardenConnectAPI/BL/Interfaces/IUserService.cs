@@ -11,8 +11,13 @@ namespace BL.Interfaces
     {
         public IEnumerable<UserDTO> Get();
         public UserDTO Get(int id);
+
+        public UserDTO GetByLogin(string login);
+        public UserDTO CheckCredentials(UserDTO user);
+
         public bool Add(UserDTO dto);
         public bool Update(UserDTO USERDTO);
         public bool Remove(UserDTO user);
+
     }
 }
