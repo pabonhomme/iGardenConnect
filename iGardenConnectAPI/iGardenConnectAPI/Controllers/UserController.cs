@@ -44,7 +44,7 @@ namespace iGardenConnectAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{login}")]
+        [Route("auth/{login}")]
         public ActionResult Get(string login)
         {
             var userDTO = _userService.GetByLogin(login);
@@ -55,6 +55,7 @@ namespace iGardenConnectAPI.Controllers
 
             return Ok(userDTO.ToVM());
         }
+
         [HttpGet]
         [Route("cookie/{idUser}")]
         public ActionResult GenerateCookie(int idUser)
@@ -69,8 +70,6 @@ namespace iGardenConnectAPI.Controllers
         }
 
         #endregion
-
-
 
         #region POST
         [HttpPost]
