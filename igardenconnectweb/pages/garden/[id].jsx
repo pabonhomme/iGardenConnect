@@ -1,11 +1,41 @@
-import Image from "next/image";
-import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import CustomNavbar from "../components/CustomNavbar";
-import CustomHeader from "../components/CustomHeader";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/router'
+import { GardenVM } from "../../model/GardenVM";
+import Loading from "../../components/Loading";
 
-export default function Garden() {
+
+export default function Garden(props) {
+  const router = useRouter();
+  const { id } = router.query;
+  const [loading, setLoading] = useState(true);
+  const [gardenn, setGarden] = useState(new GardenVM());
+
+  useEffect(() => {
+    if (id === undefined) {
+      return;
+    }
+    setLoading(true);
+    fetch(`http://localhost:5241/api/Garden/${id}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed");
+        } 
+        return response.json();
+      })
+      .then((garden) => {
+        setGarden(garden);
+        console.log(garden)
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [id]);
+  
+  
+
   // Données factices
   const garden = {
     reference: "AERXCM",
@@ -31,6 +61,26 @@ export default function Garden() {
     requiredTemperature: 18,
     requiredSunDuration: 6,
   };
+
+  if(props.user.idUser == undefined){
+    return (
+      <>
+        <main className={styles.main}>
+          <Forbidden/>
+        </main>
+      </>
+    )
+  }
+
+  if (loading) {
+    return (
+      <>
+        <main className={styles.main}>
+          <Loading/>
+        </main>
+      </>
+    )
+  }
 
   return (
     <>

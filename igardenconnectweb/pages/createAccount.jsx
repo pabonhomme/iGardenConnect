@@ -1,10 +1,5 @@
-import Head from "next/head";
 import React, { FormEvent, useState } from "react";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import CustomNavbar from "../components/CustomNavbar";
-import CustomHeader from "../components/CustomHeader";
 import { Form, Button } from "react-bootstrap";
 import { UserVM } from "../model/UserVM";
 
@@ -57,6 +52,9 @@ export default function CreateAccount() {
       })
       .catch((error) => {
         setError(error.message);
+        setTimeout(() => {
+          setError(null);
+        }, 3000); // Attendre 1 seconde (1000 millisecondes) avant de rediriger
       });
     }
   }

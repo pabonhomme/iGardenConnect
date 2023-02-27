@@ -1,3 +1,4 @@
+import { GardenSensorVM } from "./GardenSensorVM";
 import { PlantVM } from "./PlantVM";
 
 export class GardenVM {
@@ -7,7 +8,7 @@ export class GardenVM {
   lastWatered?: Date;
   wateringDuration?: number;
   plant?: PlantVM;
-  gardenSensors?: [];
+  gardenSensors?: GardenSensorVM[];
 
   constructor(
     idGarden?: string,

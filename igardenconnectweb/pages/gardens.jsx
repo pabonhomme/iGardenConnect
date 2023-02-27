@@ -1,16 +1,17 @@
-import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import { getUserByToken } from "../utils/cookie";
 import GardenCard from "../components/GardenCard";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
+import Forbidden from "../components/Forbidden";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Gardens() {
+export default function Gardens(props) {
   const [gardens, setGardens] = useState(null);
   const [noGardens, setNoGardens] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   async function getAllGardens(user) {
     // get cookie
@@ -20,7 +21,7 @@ export default function Gardens() {
         .split("; ")
         .find((row) => row.startsWith("sessionCookie="));
       const cookieValue = sessionCookie.split("=")[1];
-      
+
       const response = await fetch(
         `http://localhost:5241/api/Garden/user/${user.idUser}`,
         {
@@ -36,40 +37,60 @@ export default function Gardens() {
     }
   }
 
-  async function getUserAndGardens() {
-    const user = await getUserByToken(); // getting the user by token
+  async function getUserAndGardens(user) {
+    //const user = await getUserByToken(); // getting the user by token
     const gardens = await getAllGardens(user);
     return { gardens };
   }
 
   useEffect(() => {
-    getUserAndGardens().then(({ gardens }) => {
+    getUserAndGardens(props.user).then(({ gardens }) => {
       if (gardens.length === 0) {
         setNoGardens(<Row className="justify-content-md-center">
           <div>Vous n'avez aucun jardin</div>
         </Row>);
       } else {
         const allGardens = gardens.map((garden) => {
-          return <Col xs={4}><GardenCard garden={garden} /></Col>
+          return <Col key={garden.idGarden} xs={4}><GardenCard garden={garden} /></Col>
         });
-
+        
         const gardenRows = [];
-
+        
         for (let i = 0; i < allGardens.length; i += 3) {
           gardenRows.push(
             <Row className="justify-content-md-center" key={i}>
               {allGardens.slice(i, i + 3)}
             </Row>
           );
-        }
+        }        
 
         setGardens(gardenRows);
+        setLoading(false);
       }
     }).catch((error) => {
       console.log(error);
     });
-  }, []);
+  }, [props]);
 
+  if(props.user.idUser == undefined){
+    return (
+      <>
+        <main className={styles.main}>
+          <Forbidden/>
+        </main>
+      </>
+    )
+  }
+
+  if (loading) {
+    return (
+      <>
+        <main className={styles.main}>
+          <Loading/>
+        </main>
+      </>
+    )
+  }
 
   return (
     <>
@@ -82,267 +103,13 @@ export default function Gardens() {
           </h1>
         </div>
 
-        <Container className="gardensContainer mt-4">
+        <Container className="gardensContainer mt-4 mb-4">
           {noGardens && (<Container className="gridNogardens p-5">
-          {noGardens}
+            {noGardens}
           </Container>)}
           {gardens && (<Container className="gridgardens p-5">
-            
             {gardens}
-            {/* <Row className="justify-content-md-center">
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-            </Row>
-            <Row className="justify-content-md-center">
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-            </Row> */}
           </Container>)}
-
-          {/* <Container className="gridgardens p-5">
-            
-            {gardens}
-            <Row className="justify-content-md-center">
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-            </Row>
-            <Row className="justify-content-md-center">
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-              <Col>
-                <div className="cardgardens">
-                  <Row>
-                    <Col xs={8}>
-                      <div className="cardgardensHeader">
-                        <h2 className="cardgardensTitle">Nom jardin</h2>
-                      </div>
-                      <div className="cardgardensBody">
-                        <p className="cardgardensPlantType">Plante : Menthe</p>
-                        <p className="cardgardensWateringStatus">
-                          État : Watered
-                        </p>
-                      </div>
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center">
-                      <span>&#x279C;</span>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-            </Row>
-          </Container> */}
           <Button className="submit-button-gardens bg-secondary" type="submit" href="/addGarden">
             Ajouter un jardin
           </Button>

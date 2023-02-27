@@ -1,10 +1,11 @@
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import { Navbar, Nav } from "react-bootstrap";
+import { UserVM } from "../model/UserVM";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function CustomNavbar({ login }: { login?: string }) {
+export default function CustomNavbar({ user }: { user: UserVM }) {
 
   function logout() {
     let cookies = document.cookie.split("; ");
@@ -15,7 +16,7 @@ export default function CustomNavbar({ login }: { login?: string }) {
     window.location.href = "http://localhost:3000/";
   }
 
-  if (login) {
+  if (user.login) {
     return (
       <>
         <Navbar bg="dark" expand="md" fixed="top" variant="dark">
@@ -33,7 +34,7 @@ export default function CustomNavbar({ login }: { login?: string }) {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ms-auto"></Nav>
             <Nav>
-              <Nav.Link href="#">Bonjour {login}</Nav.Link>
+              <Nav.Link href="#">Bonjour {user.login}</Nav.Link>
               <Nav.Link href="/gardens">Mes jardins</Nav.Link>
               <Nav.Link onClick={logout} href="#">Se déconnecter</Nav.Link>
             </Nav>

@@ -4,6 +4,8 @@ import styles from "@/styles/Home.module.css";
 import { getUserByToken } from "../utils/cookie";
 import { GardenVM } from "../model/GardenVM";
 import { PlantVM } from "../model/PlantVM";
+import Loading from "../components/Loading";
+import Forbidden from "../components/Forbidden";
 import {
   Container,
   Form,
@@ -14,7 +16,7 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function AddGarden() {
+export default function AddGarden(props) {
   const [user, setUser] = useState(null); // null to verify if it worked before getting all gardens
   const [ref, setRef] = useState("");
   const [name, setName] = useState("");
@@ -22,6 +24,7 @@ export default function AddGarden() {
   const [plant, setPlant] = useState(new PlantVM());
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   function handleRefChange(event) {
     setRef(event.target.value);
@@ -36,12 +39,10 @@ export default function AddGarden() {
   }
 
   useEffect(() => {
-    async function fetchUser() {
-      const user = await getUserByToken()
-      setUser(user)
-    }
-    fetchUser()
-  }, [])
+    setUser(props.user); 
+    setLoading(false);
+    
+  }, [props])
 
   function onSubmit(event) {
     event.preventDefault();
@@ -83,6 +84,25 @@ export default function AddGarden() {
     }
   }
 
+  if(props.user.idUser == undefined){
+    return (
+      <>
+        <main className={styles.main}>
+          <Forbidden/>
+        </main>
+      </>
+    )
+  }
+
+  if (loading) {
+    return (
+      <>
+        <main className={styles.main}>
+          <Loading/>
+        </main>
+      </>
+    )
+  }
 
   return (
     <>
@@ -152,4 +172,8 @@ export default function AddGarden() {
       </main>
     </>
   );
+
+
+
+
 }

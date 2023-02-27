@@ -1,12 +1,9 @@
 import React, { FormEvent } from "react";
-import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 import { setSessionCookie } from "../utils/cookie";
 
 import { useState } from "react";
-import CustomNavbar from "../components/CustomNavbar";
-import CustomHeader from "../components/CustomHeader";
 import { Form, Button, Container } from "react-bootstrap";
 import { UserVM } from "../model/UserVM";
 
