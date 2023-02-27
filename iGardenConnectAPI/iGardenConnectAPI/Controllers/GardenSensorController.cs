@@ -55,8 +55,8 @@ namespace iGardenConnectAPI.Controllers
         #endregion
 
         #region 
-        [HttpPost]
-        [Route("/update/{idGarden}/{idSensor}/{value}")]
+        [HttpPut]
+        [Route("{idGarden}/{idSensor}/{value}")]
         public bool Update(string idGarden, int idSensor, string value)
         {
             var state = _GardenSensorService.Update(idGarden, idSensor, value);
@@ -79,7 +79,7 @@ namespace iGardenConnectAPI.Controllers
 
         #region DELETE
         [HttpDelete]
-        [Route("/delete/{idGarden}/{idSensor}")]
+        [Route("{idGarden}/{idSensor}")]
         public ActionResult Delete(string idGarden, int idSensor)
         {
             var gardenSensorDTO = _GardenSensorService.Get(idGarden, idSensor);
@@ -97,7 +97,7 @@ namespace iGardenConnectAPI.Controllers
 
         #region DELETE
         [HttpDelete]
-        [Route("/delete/{idGarden}")]
+        [Route("{idGarden}")]
         public ActionResult Delete(string idGarden)
         {
             var gardenSensorsDTO = _GardenSensorService.Get(idGarden);
