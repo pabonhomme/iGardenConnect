@@ -77,7 +77,7 @@ namespace iGardenConnectAPI.Controllers
         public ActionResult Add(UserVM userVM)
         {
             var state = _userService.Add(userVM.ToDTO());
-            if (!state) return NotFound();
+            if (!state) return BadRequest("Cet utilisateur existe déjà en base de données");
             return Ok(state);
         }
 
