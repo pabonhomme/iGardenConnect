@@ -11,69 +11,56 @@ import { Form, Button, Container } from "react-bootstrap";
 import { UserVM } from "../model/UserVM";
 
 export default function Login() {
-  let login = "";
-  let password = "";
-  const user = new UserVM();
+  
   const bcrypt = require("bcryptjs");
-
-  const [loading, setLoading] = useState(false);
-
-  // function showError(id) {
-  //   document.getElementById(id).classList.add("shake");
-  //   document.getElementById(id).innerHTML = "Error";
-  //   setTimeout(() => {
-  //     document.getElementById(id).classList.remove("shake");
-  //   }, 500);
-
-  //   setTimeout(() => {
-  //     document.getElementById(id).innerHTML = "";
-  //   }, 5000);
-  // }
+  const [login, setLogin] = useState("");
+  const [error, setError] = useState(null);
+  const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState(false);
 
   function handleLoginChange(event) {
-    login = event.target.value;
+    setLogin(event.target.value);
   }
 
   function handlePasswordChange(event) {
-    password = event.target.value;
+    setPassword(event.target.value);
   }
 
-  function onsubmit(event) {
+  async function onsubmit(event) {
     event.preventDefault();
-
-    fetch(`http://localhost:5241/api/User/auth/${login}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json(); // récupérer les données JSON dans la réponse
-        } else {
-          throw new Error("User not found");
-        }
-      })
-      .then((userData) => {
-        // créer une instance de UserVM à partir des données JSON récupérées
-        const user = new UserVM(
-          userData.idUser,
-          userData.login,
-          userData.role,
-          userData.password
-        );
-        if (bcrypt.compareSync(password, user.password)) {
-          // const sessionCookie = generateNewCookie(user.idUser, user.login);
-          // document.cookie = `sessionCookie=${sessionCookie}; max-age=86400`;
-          setSessionCookie(user);
-          window.location.href = "http://localhost:3000/";
-        } else {
-          throw new Error("Password is wrong");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+  
+    try {
+      const response = await fetch(`http://localhost:5241/api/User/auth/${login}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+  
+      if (!response.ok) {
+        throw new Error("User not found");
+      }
+  
+      const userData = await response.json();
+      const user = new UserVM(
+        userData.idUser,
+        userData.login,
+        userData.role,
+        userData.password
+      );
+  
+      if (bcrypt.compareSync(password, user.password)) {
+        await setSessionCookie(user); // wait for the cookie to be set
+        setSuccess(true);
+        setTimeout(() => {
+          window.location.href = "http://localhost:3000/";
+        }, 1000); // Attendre 1 seconde (1000 millisecondes) avant de rediriger
+      } else {
+        throw new Error("Password is wrong");
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   return (
@@ -89,6 +76,7 @@ export default function Login() {
               </Form.Label>
               <Form.Control
                 className="inputText"
+                required={true}
                 type="text"
                 placeholder="mon pseudo"
                 onChange={handleLoginChange}
@@ -101,6 +89,7 @@ export default function Login() {
               </Form.Label>
               <Form.Control
                 className="inputText"
+                required={true}
                 type="password"
                 placeholder="********"
                 onChange={handlePasswordChange}
@@ -113,7 +102,12 @@ export default function Login() {
             >
               Se connecter
             </Button>
-            <p id="error" style={{ color: "red" }}></p>
+            {error!=null && (
+                <p className="alert alert-danger mt-3">{error}</p>
+              )}
+            {success && (
+                <p className="alert alert-success mt-3">Connexion réussie</p>
+              )}
           </Form>
           <Container className="mt-4">
             <h6>Pas encore de compte ?</h6>

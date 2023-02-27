@@ -1,7 +1,7 @@
 export class PlantVM {
-    idPlant: number;
-    name: string;
-    species: string;
+    idPlant?: number;
+    name?: string;
+    species?: string;
     wateringInterval?: Date;
     optimalTemperature?: number;
     soilMoisture?: number;
@@ -10,9 +10,9 @@ export class PlantVM {
 
     
   constructor(
-    idPlant: number,
-    name: string,
-    species: string,
+    idPlant?: number,
+    name?: string,
+    species?: string,
     wateringInterval?: Date,
     optimalTemperature?: number,
     soilMoisture?: number,

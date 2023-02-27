@@ -4,6 +4,15 @@
   align-items: center;
 }
 
+/* to center the text for no garden */
+.gridNogardens { 
+  box-shadow: 0 0 10px gray;
+  border: 0px solid black !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .gridgardens {
   box-shadow: 0 0 10px gray;
   border: 0px solid black !important;
@@ -19,6 +28,7 @@
   border: 1px solid #ddd;
   padding: 16px;
   margin: 8px;
+  overflow: hidden;
 }
 
 .cardgardensHeader {
@@ -88,3 +98,13 @@
     line-height: 1.5;
     max-width: 30ch;
   } */
+  @media screen and (max-width: 768px) {
+    .gardensContainer {
+      flex-direction: column;
+    }
+
+    .submit-button-gardens {
+      margin-top: 40px;
+      white-space: nowrap;
+  }
+  }

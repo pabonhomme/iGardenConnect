@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { Inter } from "@next/font/google";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { SmallGardenVM } from "../model/SmallGardenVM";
+import { GardenVM } from "../model/GardenVM";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function GardenCard({ garden }: { garden?: SmallGardenVM }) {
+export default function GardenCard({ garden }: { garden?: GardenVM }) {
   return (
     <>
       <div className="cardgardens">

@@ -28,7 +28,6 @@ export async function getUserByToken() {
         .find((row) => row.startsWith("sessionCookie="));
       const cookieValue = sessionCookie.split("=")[1];
 
-      console.log(cookieValue);
       if (cookieValue) {
         const response = await fetch(`http://localhost:5241/api/user/cookie/${cookieValue}`, {
           method: "POST",

@@ -2,6 +2,7 @@
   width: 1000px;
   box-shadow: 0 0 10px gray;
   border: 0px solid black !important;
+  margin-bottom: 40px;
 }
 
 .form-addContainer {
