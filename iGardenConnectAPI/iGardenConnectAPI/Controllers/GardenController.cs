@@ -60,11 +60,12 @@ namespace iGardenConnectAPI.Controllers
         #region POST
         [HttpPost]
         [Route("{idUser}")]
-        public bool Add(GardenVM gardenVM, int idUser)
+        public ActionResult Add(GardenVM gardenVM, int idUser)
         {
             var gardenDTO = gardenVM.ToDTO();
             var state = _GardenService.Add(gardenDTO, idUser);
-            return state;
+            if (!state) return BadRequest("Ce jardin appartient déjà à un autre utilisateur");
+            return Ok(state);
         }
         #endregion
 
