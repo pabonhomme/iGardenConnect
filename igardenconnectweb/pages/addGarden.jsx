@@ -22,6 +22,7 @@ export default function AddGarden(props) {
   const [name, setName] = useState("");
   const [idPlant, setIdPlant] = useState(1);
   const [plant, setPlant] = useState(new PlantVM());
+  const [plants, setPlants] = useState([]);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -38,10 +39,33 @@ export default function AddGarden(props) {
     setIdPlant(event.target.selectedIndex + 1);
   }
 
+  function createPlantOptions(plantList) {
+    return plantList.map((plant) => (
+      <option key={plant.name} value={plant.name}>
+        {plant.name}
+      </option>
+    ));
+  } 
+
   useEffect(() => {
-    setUser(props.user); 
+    fetch(`http://localhost:5241/api/Plant`)
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((errorMessage) => {
+            throw new Error(errorMessage);
+          });
+        }
+        return response.json();
+      })
+      .then((plantsdata) => {
+        setPlants(plantsdata);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+    setUser(props.user);
     setLoading(false);
-    
+
   }, [props])
 
   function onSubmit(event) {
@@ -84,11 +108,11 @@ export default function AddGarden(props) {
     }
   }
 
-  if(props.user.idUser == undefined){
+  if (props.user.idUser == undefined) {
     return (
       <>
         <main className={styles.main}>
-          <Forbidden/>
+          <Forbidden />
         </main>
       </>
     )
@@ -98,7 +122,7 @@ export default function AddGarden(props) {
     return (
       <>
         <main className={styles.main}>
-          <Loading/>
+          <Loading />
         </main>
       </>
     )
@@ -147,12 +171,7 @@ export default function AddGarden(props) {
               </Col>
               <Col className="d-flex align-items-center justify-content-center">
                 <Form.Select className="selectPlant" onChange={handlePlantChange}>
-                  <option>Menthe</option>
-                  <option>Basilic</option>
-                  <option>Rose</option>
-                  <option>Persil</option>
-                  <option>Coriandre</option>
-                  <option>Romarin</option>
+                   {createPlantOptions(plants)}
                 </Form.Select>
               </Col>
             </Row>

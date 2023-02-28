@@ -49,6 +49,7 @@ export default function Gardens(props) {
         setNoGardens(<Row className="justify-content-md-center">
           <div>Vous n'avez aucun jardin</div>
         </Row>);
+        setLoading(false);
       } else {
         const allGardens = gardens.map((garden) => {
           return <Col key={garden.idGarden} xs={4}><GardenCard garden={garden} /></Col>

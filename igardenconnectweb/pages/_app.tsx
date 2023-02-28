@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import '@/styles/login.css'
 import '@/styles/gardens.css'
+import '@/styles/garden.css'
 import '@/styles/addGarden.css'
 import '@/styles/loading.css'
 import '@/styles/index.css'
