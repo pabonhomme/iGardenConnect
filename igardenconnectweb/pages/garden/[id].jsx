@@ -81,7 +81,21 @@ export default function Garden(props) {
                   case "airMoisture":
                     return <span> {sensor.value} % </span>;
                   case "soilMoisture":
-                    return <span> {sensor.value} </span>;
+                    let soilMoistureClass = "";
+                    let soilMoisture = "";
+                    if (sensor.value > 350) {
+                      soilMoistureClass = "text-danger";
+                      soilMoisture = "Sec";
+                    } else if (sensor.value >= 180 && sensor.value <= 350) {
+                      soilMoistureClass = "text-warning";
+                      soilMoisture = "Humide";
+                    } else {
+                      soilMoistureClass = "text-success";
+                      soilMoisture = "Mouillé";
+                    }
+                    return (
+                      <span className={soilMoistureClass}> {soilMoisture} </span>
+                    );
                   case "waterlevel":
                     let waterLevelClass = "";
                     if (sensor.value > 75) {
@@ -112,34 +126,34 @@ export default function Garden(props) {
     );
   }
 
-  function deleteGarden(){
+  function deleteGarden() {
     event.preventDefault();
     const sessionCookie = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("sessionCookie="));
-      const cookieValue = sessionCookie.split("=")[1];
+      .split("; ")
+      .find((row) => row.startsWith("sessionCookie="));
+    const cookieValue = sessionCookie.split("=")[1];
 
-      fetch(`http://localhost:5241/api/Garden/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${cookieValue}`,
-        },
+    fetch(`http://localhost:5241/api/Garden/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${cookieValue}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((errorMessage) => {
+            throw new Error(errorMessage);
+          });
+        }
+        setSuccess(true);
+        setTimeout(() => {
+          window.location.href = "http://localhost:3000/gardens";
+        }, 1000); // Attendre 1 seconde (1000 millisecondes) avant de rediriger
       })
-        .then((response) => {
-          if (!response.ok) {
-            return response.text().then((errorMessage) => {
-              throw new Error(errorMessage);
-            });
-          }
-          setSuccess(true);
-          setTimeout(() => {
-            window.location.href = "http://localhost:3000/gardens";
-          }, 1000); // Attendre 1 seconde (1000 millisecondes) avant de rediriger
-        })
-        .catch((error) => {
-          setError(error.message);
-        });
+      .catch((error) => {
+        setError(error.message);
+      });
   }
 
   if (props.user.idUser == undefined) {
@@ -204,28 +218,43 @@ export default function Garden(props) {
                     <strong>Espèce :</strong> {garden.plant.species}
                   </li>
                   <li className="mb-4">
-                    <strong>Température optimale :</strong> {garden.plant.optimalTemperature}
+                    <strong>Température optimale :</strong> {garden.plant.optimalTemperature} °C
                   </li>
                   <li className="mb-4">
-                    <strong>Humidité du sol optimale :</strong> {garden.plant.soilMoisture}
+                    {(() => {
+                      let soilMoistureClass = "";
+                      let soilMoisture = "";
+                      if (garden.plant.soilMoisture > 350) {
+                        soilMoisture = "Sec";
+                      } else if (garden.plant.soilMoisture >= 180 && garden.plant.soilMoisture <= 350) {
+                        soilMoisture = "Humide";
+                      } else {
+                        soilMoisture = "Mouillé";
+                      }
+                      return (
+                        <>
+                          <strong>Humidité du sol optimale :</strong> {soilMoisture}
+                        </>
+                      );
+                    })()}
                   </li>
                   <li className="mb-4">
-                    <strong>Humidité de l'air optimale :</strong> {garden.plant.airMoisture}
+                    <strong>Humidité de l'air optimale :</strong> {garden.plant.airMoisture} %
                   </li>
                   <li className="mb-4">
-                    <strong>Luminosité optimale :</strong> {garden.plant.light}
+                    <strong>Luminosité optimale :</strong> {garden.plant.light >= 5 ? "Ensoleillé" : "Peu ensoleillé"}
                   </li>
                 </ul>
               </div>
             </Col>
           </Row>
           <div className="text-center">
-          {error != null && (
-                <p className="alert alert-danger mt-3">{error}</p>
-              )}
-              {success && (
-                <p className="alert alert-success mt-3">Le jardin a été supprimé !</p>
-              )}
+            {error != null && (
+              <p className="alert alert-danger mt-3">{error}</p>
+            )}
+            {success && (
+              <p className="alert alert-success mt-3">Le jardin a été supprimé !</p>
+            )}
             <Button className="btn btn-danger" onClick={deleteGarden}>Supprimer le jardin</Button>
           </div>
         </Container>

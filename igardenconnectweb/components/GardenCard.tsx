@@ -27,9 +27,15 @@ export default function GardenCard({ garden }: { garden?: GardenVM }) {
                 {garden?.idGarden}
               </div>
             </div>
-            <div className="cardgardensBody">
-              <p className="cardgardensPlantType">Plante : {garden?.plant?.name}</p>
-              <p className="cardgardensWateringStatus">État : {garden?.watered}</p>
+            <div className="cardgardensBody d-flex flex-column justify-content-between">
+              <div className="cardgardensPlantType mb-3">
+                <img src="/plante.png" alt="plante" className="mr-2"/>
+                {" " + garden?.plant?.name}
+              </div>
+              <div className="cardgardensPlantType">
+                <img src="/arrosoir.png" alt="plante" className="mr-2"/>
+                {garden?.watered ? "  Arrosage en cours" : "  Arrosage terminé"}  
+              </div>
             </div>
           </Col>
           <Col xs={4} className="d-flex align-items-center">
