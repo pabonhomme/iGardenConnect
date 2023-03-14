@@ -487,30 +487,13 @@
 											"height": 13,
 											"text": "+Password: string",
 											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGFjI4YEymc1dk=",
-											"_parent": {
-												"$ref": "AAAAAAGFdpK95vsVTVc="
-											},
-											"model": {
-												"$ref": "AAAAAAGFjI4YBSmZRoo="
-											},
-											"font": "Arial;13;0",
-											"left": 901,
-											"top": 314,
-											"width": 351,
-											"height": 13,
-											"text": "+Username: string",
-											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 896,
 									"top": 249,
 									"width": 361,
-									"height": 83
+									"height": 68
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -521,64 +504,11 @@
 									"model": {
 										"$ref": "AAAAAAGFdpK95fsNRdE="
 									},
-									"subViews": [
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGFjJHwUyzGddI=",
-											"_parent": {
-												"$ref": "AAAAAAGFdpK95vsWxBI="
-											},
-											"model": {
-												"$ref": "AAAAAAGFjJHwSSzDhgE="
-											},
-											"font": "Arial;13;0",
-											"left": 901,
-											"top": 337,
-											"width": 351,
-											"height": 13,
-											"text": "+AddGarden(garden: Garden): void",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGFjJZu3C7P67Q=",
-											"_parent": {
-												"$ref": "AAAAAAGFdpK95vsWxBI="
-											},
-											"model": {
-												"$ref": "AAAAAAGFjJZuzi7MTP0="
-											},
-											"font": "Arial;13;0",
-											"left": 901,
-											"top": 352,
-											"width": 351,
-											"height": 13,
-											"text": "+RemoveGarden(garden: Garden): void",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGFjMzwiVHpQYQ=",
-											"_parent": {
-												"$ref": "AAAAAAGFdpK95vsWxBI="
-											},
-											"model": {
-												"$ref": "AAAAAAGFjMzwW1HmJVI="
-											},
-											"font": "Arial;13;0",
-											"left": 901,
-											"top": 367,
-											"width": 351,
-											"height": 13,
-											"text": "+EditGarden(garden: Garden): void",
-											"horizontalAlignment": 0
-										}
-									],
 									"font": "Arial;13;0",
 									"left": 896,
-									"top": 332,
+									"top": 317,
 									"width": 361,
-									"height": 53
+									"height": 10
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -1514,7 +1444,7 @@
 											"top": 839,
 											"width": 100.80712890625,
 											"height": 13,
-											"text": "Brightness"
+											"text": "Light"
 										},
 										{
 											"_type": "LabelView",
@@ -1586,7 +1516,7 @@
 											"top": 862,
 											"width": 100.80712890625,
 											"height": 13,
-											"text": "+Brightness: float",
+											"text": "+Light: Float",
 											"horizontalAlignment": 0
 										}
 									],
@@ -3613,107 +3543,6 @@
 							},
 							"name": "Password",
 							"type": "string"
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAGFjI4YBSmZRoo=",
-							"_parent": {
-								"$ref": "AAAAAAGFdpK95fsNRdE="
-							},
-							"name": "Username",
-							"type": "string"
-						}
-					],
-					"operations": [
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGFjJHwSSzDhgE=",
-							"_parent": {
-								"$ref": "AAAAAAGFdpK95fsNRdE="
-							},
-							"name": "AddGarden",
-							"parameters": [
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGFjJJHZi1C3hE=",
-									"_parent": {
-										"$ref": "AAAAAAGFjJHwSSzDhgE="
-									},
-									"name": "garden",
-									"type": {
-										"$ref": "AAAAAAGFdpFVVvrR7jg="
-									}
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGFjJJHZi1DB7c=",
-									"_parent": {
-										"$ref": "AAAAAAGFjJHwSSzDhgE="
-									},
-									"type": "void",
-									"direction": "return"
-								}
-							]
-						},
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGFjJZuzi7MTP0=",
-							"_parent": {
-								"$ref": "AAAAAAGFdpK95fsNRdE="
-							},
-							"name": "RemoveGarden",
-							"parameters": [
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGFjJaMCi8nIz0=",
-									"_parent": {
-										"$ref": "AAAAAAGFjJZuzi7MTP0="
-									},
-									"name": "garden",
-									"type": {
-										"$ref": "AAAAAAGFdpFVVvrR7jg="
-									}
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGFjJaMCi8o/tI=",
-									"_parent": {
-										"$ref": "AAAAAAGFjJZuzi7MTP0="
-									},
-									"type": "void",
-									"direction": "return"
-								}
-							]
-						},
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGFjMzwW1HmJVI=",
-							"_parent": {
-								"$ref": "AAAAAAGFdpK95fsNRdE="
-							},
-							"name": "EditGarden",
-							"parameters": [
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGFjM0Y4lJBpQM=",
-									"_parent": {
-										"$ref": "AAAAAAGFjMzwW1HmJVI="
-									},
-									"name": "garden",
-									"type": {
-										"$ref": "AAAAAAGFdpFVVvrR7jg="
-									}
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGFjM0Y4lJCY2M=",
-									"_parent": {
-										"$ref": "AAAAAAGFjMzwW1HmJVI="
-									},
-									"type": "void",
-									"direction": "return"
-								}
-							]
 						}
 					]
 				},
@@ -3952,7 +3781,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGFdpE0CvrMWDs="
 					},
-					"name": "Brightness",
+					"name": "Light",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",
@@ -3975,8 +3804,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGFdqg2UhAynNo="
 							},
-							"name": "Brightness",
-							"type": "float"
+							"name": "Light",
+							"type": "Float"
 						}
 					]
 				},
