@@ -87,7 +87,7 @@ export default function AddGarden(props) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `${cookieValue}`,
+          Authorization: `Bearer ${cookieValue}`,
         },
         body: JSON.stringify(garden),
       })

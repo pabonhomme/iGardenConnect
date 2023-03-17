@@ -27,7 +27,7 @@ export default function Gardens(props) {
         {
           method: "GET",
           headers: {
-            Authorization: `${cookieValue}`,
+            Authorization: `Bearer ${cookieValue}`,
           },
         }
       );
