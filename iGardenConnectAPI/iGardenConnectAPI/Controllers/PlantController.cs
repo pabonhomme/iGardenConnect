@@ -24,7 +24,11 @@ namespace iGardenConnectAPI.Controllers
         }
         #endregion
 
-#region GET
+        /// <summary>
+        /// Get all the plants
+        /// </summary>
+        /// <returns>List of plants</returns>
+        #region GET
         [HttpGet]
         [Route("")]
         public IEnumerable<PlantVM> Get()
@@ -34,6 +38,11 @@ namespace iGardenConnectAPI.Controllers
             return plantsDTO.Select(dto => dto.ToVM());
         }
 
+        /// <summary>
+        /// Get a plant from its reference
+        /// </summary>
+        /// <param name="id">Reference of the plant</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         public PlantVM Get(int id)
