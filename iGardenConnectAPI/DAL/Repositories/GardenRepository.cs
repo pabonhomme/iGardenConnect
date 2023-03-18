@@ -135,11 +135,14 @@ namespace DAL.Repositories
 
             return false;
         }
-        public bool UpdateByWateringDuration(GardenDTO gardenDTO, int duration)
+        public bool UpdateByWateringDuration(GardenDTO gardenDTO, int idSensor, int duration)
         {
+
             try
             {
+                Garden g = _dbcontext.Gardens.FirstOrDefault(g => g.IdGarden == gardenDTO.IdGarden);
                 var entity = gardenDTO.ToEntity();
+                entity.IdUser = g.IdUser;
                 entity.WateringDuration = duration;
                 entity.LastWatered = DateTime.Today;
                 _dbcontext.Update(entity);
@@ -180,7 +183,6 @@ namespace DAL.Repositories
 
             return false;
         }
-
 
     }
 }

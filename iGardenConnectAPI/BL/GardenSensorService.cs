@@ -60,12 +60,18 @@ namespace BL
         {
             return _gardenSensorRepository.AddGardenSensor(idGarden, idSensor);
         }
-        public bool Update(string idGarden, int idSensor, string value)
+        public bool UpdateByValue(string idGarden, int idSensor, string value)
         {
             GardenSensorDTO gsDTO = this.Get(idGarden, idSensor);
-            return _gardenSensorRepository.Update(gsDTO, idGarden, value);
+            return _gardenSensorRepository.UpdateByValue(gsDTO, idGarden, value);
         }
- 
+
+        public bool UpdateByState(string idGarden, int idSensor, string state)
+        {
+            GardenSensorDTO gsDTO = this.Get(idGarden, idSensor);
+            return _gardenSensorRepository.UpdateByState(gsDTO, idGarden, state);
+        }
+
         public bool Remove(GardenSensorDTO gardenSensorDTO, string idGarden)
         {
             return _gardenSensorRepository.Remove(gardenSensorDTO,idGarden);
@@ -85,5 +91,8 @@ namespace BL
         {
             throw new NotImplementedException();
         }
+
+ 
+
     }
 }

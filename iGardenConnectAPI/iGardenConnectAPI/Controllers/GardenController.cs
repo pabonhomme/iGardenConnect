@@ -154,10 +154,10 @@ namespace iGardenConnectAPI.Controllers
 
         [HttpPut]
         [Route("{idGarden}/{idSensor}/{duration}")]
-        public bool UpdateWateringDuration(string idGarden, int duration)
+        public bool UpdateWateringDuration(string idGarden, int idSensor, int duration)
         {
             var gardenDTO = _GardenService.GetByIdGarden(idGarden);
-            var state = _GardenService.UpdateByWateringDuration(gardenDTO, duration);
+            var state = _GardenService.UpdateByWateringDuration(gardenDTO, idSensor, duration);
 
             return state;
         }

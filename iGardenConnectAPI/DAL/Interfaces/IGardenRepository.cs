@@ -19,7 +19,7 @@ namespace DAL.Interfaces
 
         public bool UpdateByNamePlant(GardenDTO gardenDTO, string name, int idPlant);
 
-        public bool UpdateByWateringDuration(GardenDTO gardenDTO, int duration);
+        public bool UpdateByWateringDuration(GardenDTO gardenDTO, int idSensor, int duration);
 
         public bool Remove(GardenDTO gardenDTO);
     }

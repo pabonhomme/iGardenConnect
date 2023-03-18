@@ -110,13 +110,41 @@ namespace DAL.Repositories
 
             return false;
         }
-        public bool Update(GardenSensorDTO gardenSensorDTO, string idGarden, string value)
+        public bool UpdateByValue(GardenSensorDTO gardenSensorDTO, string idGarden, string value)
         {
             try
             {
                 var entity = gardenSensorDTO.ToEntity();
                 entity.IdGarden = idGarden;
                 entity.Value = value; //update 
+                _dbcontext.Update(entity);
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Update water pump and leds by state (ON or OFF)
+        /// </summary>
+        /// <param name="gardenSensorDTO"></param>
+        /// <param name="idGarden"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public bool UpdateByState(GardenSensorDTO gardenSensorDTO, string idGarden, string state)
+        {
+            try
+            {
+                var entity = gardenSensorDTO.ToEntity();
+                entity.IdGarden = idGarden;
+                entity.State= state.Trim(); //update 
                 _dbcontext.Update(entity);
                 _dbcontext.SaveChanges();
                 return true;

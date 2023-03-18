@@ -18,7 +18,7 @@ namespace BL.Interfaces
 
         public bool UpdateByPlant(GardenDTO gardenDTO, int idPlant);
 
-        public bool UpdateByWateringDuration(GardenDTO gardenDTO, int duration);
+        public bool UpdateByWateringDuration(GardenDTO gardenDTO, int idSensor, int duration);
         public bool Remove(GardenDTO gardenDTO);
     }
 }

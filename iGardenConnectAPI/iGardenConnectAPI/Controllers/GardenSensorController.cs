@@ -59,7 +59,7 @@ namespace iGardenConnectAPI.Controllers
         [Route("{idGarden}/{idSensor}/{value}")]
         public bool Update(string idGarden, int idSensor, string value)
         {
-            var state = _GardenSensorService.Update(idGarden, idSensor, value);
+            var state = _GardenSensorService.UpdateByValue(idGarden, idSensor, value);
 
             return state;
         }

@@ -26,7 +26,9 @@ namespace BL.Interfaces
         /// <returns></returns>
         public bool AddGardenSensor(string idGarden, int idSensor);
 
-        public bool Update(string idGarden, int idSensor, string value);
+        public bool UpdateByValue(string idGarden, int idSensor, string value);
+        public bool UpdateByState(string idGarden, int idSensor, string state);
+
         public bool Remove(GardenSensorDTO gardenSensorDTO, string idGarden);
         public bool RemoveGardenSensors(IEnumerable<GardenSensorDTO> gardenSensors, string IdGarden);
 
