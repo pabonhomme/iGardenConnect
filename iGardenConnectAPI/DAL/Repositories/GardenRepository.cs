@@ -135,6 +135,25 @@ namespace DAL.Repositories
 
             return false;
         }
+        public bool UpdateByWateringDuration(GardenDTO gardenDTO, int duration)
+        {
+            try
+            {
+                var entity = gardenDTO.ToEntity();
+                entity.WateringDuration = duration;
+                entity.LastWatered = DateTime.Today;
+                _dbcontext.Update(entity);
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
+        }
 
         #endregion
         public bool Remove(GardenDTO garden)

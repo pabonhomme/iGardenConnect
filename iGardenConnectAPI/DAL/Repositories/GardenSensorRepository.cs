@@ -62,7 +62,7 @@ namespace DAL.Repositories
 
                     entity.IdGarden = idGarden;
                     entity.IdSensor = sensor.IdSensor;
-                    entity.Value = "23";
+                    entity.Value = "0";
                     entity.State = "OFF";
 
 

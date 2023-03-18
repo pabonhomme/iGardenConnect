@@ -67,6 +67,7 @@ namespace iGardenConnectAPI.Controllers
             if (!state) return BadRequest("Ce jardin appartient déjà à un autre utilisateur");
             return Ok(state);
         }
+
         #endregion
 
         #region PUT
@@ -98,6 +99,18 @@ namespace iGardenConnectAPI.Controllers
 
             return state;
         }
+
+
+        [HttpPut]
+        [Route("{idGarden}/{idSensor}/{duration}")]
+        public bool UpdateWateringDuration(string idGarden, int duration)
+        {
+            var gardenDTO = _GardenService.GetByIdGarden(idGarden);
+            var state = _GardenService.UpdateByWateringDuration(gardenDTO, duration);
+
+            return state;
+        }
+
         #endregion
         #region DELETE
         [HttpDelete]

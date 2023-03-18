@@ -89,6 +89,9 @@ namespace BL
             return _gardenRepository.UpdateByNamePlant(gardenDTO, name, idPlant);
         }
 
-
+        public bool UpdateByWateringDuration(GardenDTO gardenDTO, int duration)
+        {
+            return _gardenRepository.UpdateByWateringDuration(gardenDTO, duration);
+        }
     }
 }
