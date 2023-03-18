@@ -10,6 +10,8 @@ using DAL.Models;
 using VM;
 using VM.Extensions;
 using DTO;
+using Newtonsoft.Json.Linq;
+using BL.utils;
 
 namespace iGardenConnectAPI.Controllers
 {
@@ -42,29 +44,78 @@ namespace iGardenConnectAPI.Controllers
         [Route("{id}")]
         public GardenVM Get(string id)
         {
-            var gardenDTO = _GardenService.GetByIdGarden(id);
+            // Get the JWT token from the Authorization header
+            var authorizationHeader = HttpContext.Request.Headers["Authorization"].ToString();
+            var jwtToken = authorizationHeader.Replace("Bearer ", "");
 
-            return gardenDTO.ToVM();
+            // Validate the token
+            var isValidated = Auth.ValidateToken(jwtToken);
+
+            // Check if the token is valid, and return the garden with the specified id if it is
+            if (isValidated)
+            {
+                var gardenDTO = _GardenService.GetByIdGarden(id);
+                return gardenDTO?.ToVM();
+            }
+
+            // Return null if the token is invalid
+            return null;
         }
+
         #endregion
 
         [HttpGet]
         [Route("user/{idUser}")]
         public IEnumerable<GardenVM> Get(int idUser)
         {
-            var gardensDTO = _GardenService.Get(idUser);
+            // Get the JWT token from the Authorization header
+            var authorizationHeader = HttpContext.Request.Headers["Authorization"].ToString();
+            var jwtToken = authorizationHeader.Replace("Bearer ", "");
 
+            // Validate the token and get the user id from the token
+            var isValidated = Auth.ValidateToken(jwtToken);
+            var idUserFromToken = int.Parse(Auth.DecodeJwtToken(jwtToken));
+
+            // Check if the user id from the token matches the id specified in the URL
+            if (!isValidated || idUserFromToken != idUser)
+            {
+                return null;
+            }
+
+            // Get the gardens for the user and return the result
+            var gardensDTO = _GardenService.Get(idUser);
             return gardensDTO.Select(dto => dto.ToVM());
         }
-        
+
+
         #region POST
         [HttpPost]
         [Route("{idUser}")]
         public ActionResult Add(GardenVM gardenVM, int idUser)
         {
             var gardenDTO = gardenVM.ToDTO();
+
+            // Get the JWT token from the Authorization header
+            var authorizationHeader = HttpContext.Request.Headers["Authorization"].ToString();
+            var jwtToken = authorizationHeader.Replace("Bearer ", "");
+
+            // Validate the token and get the user id from the token
+            var isValidated = Auth.ValidateToken(jwtToken);
+            var idUserFromToken = int.Parse(Auth.DecodeJwtToken(jwtToken));
+
+            // Check if the user id from the token matches the id specified in the URL
+            if (!isValidated || idUserFromToken != idUser)
+            {
+                return BadRequest("Le jeton n'est plus valide ou ne correspond pas à l'utilisateur.");
+            }
+
+            // Add the garden and return the result
             var state = _GardenService.Add(gardenDTO, idUser);
-            if (!state) return BadRequest("Ce jardin appartient déjà à un autre utilisateur");
+            if (!state)
+            {
+                return BadRequest("Ce jardin appartient déjà à un autre utilisateur.");
+            }
+
             return Ok(state);
         }
 

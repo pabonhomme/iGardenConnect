@@ -1,5 +1,6 @@
 ﻿using BL;
 using BL.Interfaces;
+using BL.utils;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -60,7 +61,7 @@ namespace iGardenConnectAPI.Controllers
         [Route("cookie/{idUser}")]
         public ActionResult GenerateCookie(int idUser)
         {
-            var cookie = _userService.GenerateCookie(idUser);
+            var cookie = Auth.GenerateCookie(idUser);
             if (cookie == null)
             {
                 return NotFound();

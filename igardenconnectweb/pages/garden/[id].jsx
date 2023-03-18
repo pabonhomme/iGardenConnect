@@ -36,7 +36,18 @@ export default function Garden(props) {
     setLoading(true);
 
     const fetchData = () => {
-      fetch(`http://localhost:5241/api/Garden/${id}`)
+
+      const sessionCookie = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("sessionCookie="));
+      const cookieValue = sessionCookie.split("=")[1];
+      
+      fetch(`http://localhost:5241/api/Garden/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${cookieValue}`,
+        }
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error("Failed");
