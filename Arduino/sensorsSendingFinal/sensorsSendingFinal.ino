@@ -42,8 +42,8 @@ int soilMoistureValue = 0;
 int pumpTime = 0;
 
 //----------------Sending
-const char* ssid = "Livebox-XXXX";
-const char* password = "xxxxxxx";
+const char* ssid = "xxxxxxxxxxx";
+const char* password = "xxxxx";
 
 
 
@@ -187,8 +187,7 @@ void loop() {
   } else if (soilMoistureValue <= 379) {
     Serial.println("Wet");
     digitalWrite(relay_2, LOW);
-    if(pumpTime<0)
-    {
+    if (pumpTime < 0) {
       pumpTime = pumpTime * -1;
     }
     Serial.println("Temps Pompe Active : " + String(pumpTime / 1000) + " secondes");
@@ -227,7 +226,7 @@ void loop() {
 
 
   //-----------------------Sending
-  char server[] = "192.168.1.11";
+  char server[] = "192.168.104.59";
 
   //TEMPERATURE
   char endpointTemperature[] = "/api/GardenSensor/g01/1/";
@@ -283,7 +282,7 @@ void loop() {
   }
 
   //water_level
-  char endpointwater_level[] = "/api/GardenSensor/g01/8/";
+  char endpointwater_level[] = "/api/GardenSensor/g01/4/";
   String water_level = String(return_water_level);
   String sendwater_level = String(endpointwater_level) + String(water_level);
   if (client.connect(server, 5241)) {
@@ -300,7 +299,7 @@ void loop() {
   }
 
   //Brightness
-  char endpointBrightness[] = "/api/GardenSensor/g01/9/";
+  char endpointBrightness[] = "/api/GardenSensor/g01/5/";
   String sendBrightness = String(endpointBrightness) + String(value);
   if (client.connect(server, 5241)) {
     Serial.println("Liaison Effectuée à la route Brightness: " + sendBrightness);
@@ -316,7 +315,7 @@ void loop() {
   }
 
   //PUMP
-  char endpointPUMPstate[] = "/api/GardenSensor/g01/10/";
+  char endpointPUMPstate[] = "/api/Garden/g01/";
   String sendPUMPstate = String(endpointPUMPstate) + String(PUMPstate);
   if (client.connect(server, 5241)) {
     Serial.println("Liaison Effectuée à la route Pump_State: " + sendPUMPstate);
@@ -332,7 +331,7 @@ void loop() {
   }
 
   //LEDS
-  char endpointLEDstate[] = "/api/GardenSensor/g01/11/";
+  char endpointLEDstate[] = "/api/GardenSensor/g01/7/";
   String sendLEDstate = String(endpointLEDstate) + String(LEDstate);
   if (client.connect(server, 5241)) {
     Serial.println("Liaison Effectuée à la route Leds_state: " + sendLEDstate);
@@ -348,20 +347,22 @@ void loop() {
   }
 
   //water_pump_time
-  char endpointwater_pump_time[] = "/api/GardenSensor/g01/12/";
-  String water_pump_time = String(pump_send);
-  String sendwater_pump_time = String(endpointwater_pump_time) + String(water_pump_time);
-  if (client.connect(server, 5241)) {
-    Serial.println("Liaison Effectuée à la route Water_pump_time: " + sendwater_pump_time);
-    client.print("PUT " + String(sendwater_pump_time) + " HTTP/1.1\r\n");
-    client.print("Host: localhost:5241\r\n");
-    client.print("User-Agent: Arduino/1.0\r\n");
-    client.print("Accept: text/plain\r\n");
-    client.print("Content-Length: 0\r\n");
-    client.print("Connection: close\r\n\r\n");
-  } else {
-    Serial.println("echec");
-    Serial.println(client.connect(server, 5241));
+  if (PUMPstate == 0) {
+    char endpointwater_pump_time[] = "/api/Garden/g01/6/";
+    String water_pump_time = String(pump_send);
+    String sendwater_pump_time = String(endpointwater_pump_time) + String(water_pump_time);
+    if (client.connect(server, 5241)) {
+      Serial.println("Liaison Effectuée à la route Water_pump_time: " + sendwater_pump_time);
+      client.print("PUT " + String(sendwater_pump_time) + " HTTP/1.1\r\n");
+      client.print("Host: localhost:5241\r\n");
+      client.print("User-Agent: Arduino/1.0\r\n");
+      client.print("Accept: text/plain\r\n");
+      client.print("Content-Length: 0\r\n");
+      client.print("Connection: close\r\n\r\n");
+    } else {
+      Serial.println("echec");
+      Serial.println(client.connect(server, 5241));
+    }
   }
 
   SERIAL.println(" ");
@@ -369,11 +370,9 @@ void loop() {
 
 
   //delaySending
-  if(PUMPstate == 1)
-  {
+  if (PUMPstate == 1) {
     delay(3000);
-  }
-  else{
-    delay(1000);
+  } else {
+    delay(15000);
   }
 }
