@@ -15,6 +15,10 @@
    "SelectedToBeGenerated": 0,
    "Tables": [
       {
+         "Name": "[dbo].[ExistingGarden]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Garden]",
          "ObjectType": 0
       },

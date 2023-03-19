@@ -104,5 +104,11 @@ namespace BL
             }
             return false;
         }
+
+        public bool ActivateGarden(string idGarden, int active)
+        {
+            ExistingGarden eg = _gardenRepository.GetExistingGarden(idGarden);
+            return _gardenRepository.ActivateGarden(eg, active);
+        }
     }
 }

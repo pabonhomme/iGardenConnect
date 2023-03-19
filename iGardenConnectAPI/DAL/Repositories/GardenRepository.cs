@@ -50,17 +50,29 @@ namespace DAL.Repositories
             return gDTO;
 
         }
+
+        public ExistingGarden GetExistingGarden(string idGarden)
+        {
+           return _dbcontext.ExistingGardens.FirstOrDefault(g => g.IdGarden == idGarden);
+        }
         public bool Add(GardenDTO dto, int idUser, int idPlant)
         {
             try
             {
-                var entity = dto.ToEntity();
-                entity.IdUser = idUser;
-                entity.IdPlant = idPlant;
+                ExistingGarden eg = _dbcontext.ExistingGardens.FirstOrDefault(g => g.IdGarden == dto.IdGarden);
+                if(eg != null && eg.IsActive==1)
+                {
+                    ActivateGarden(eg, 0);
+                    var entity = dto.ToEntity();
+                    entity.IdUser = idUser;
+                    entity.IdPlant = idPlant;
 
-                _dbcontext.Add(entity);
-                _dbcontext.SaveChanges();
-                return true;
+                    _dbcontext.Add(entity);
+                    _dbcontext.SaveChanges();
+                    return true;
+
+                }
+ 
 
             }
             catch (Exception e)
@@ -188,6 +200,24 @@ namespace DAL.Repositories
             return false;
         }
 
+        public bool ActivateGarden(ExistingGarden eg, int active)
+        {
+            try
+            {
+                eg.IsActive = active;
+                _dbcontext.Update(eg);
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
+        }
+    
         #endregion
         public bool Remove(GardenDTO garden)
         {
@@ -213,7 +243,6 @@ namespace DAL.Repositories
 
             return false;
         }
-
 
     }
 }

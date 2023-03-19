@@ -18,6 +18,7 @@ namespace DAL.Models
         {
         }
 
+        public virtual DbSet<ExistingGarden> ExistingGardens { get; set; }
         public virtual DbSet<Garden> Gardens { get; set; }
         public virtual DbSet<GardenSensor> GardenSensors { get; set; }
         public virtual DbSet<Plant> Plants { get; set; }
@@ -26,6 +27,20 @@ namespace DAL.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ExistingGarden>(entity =>
+            {
+                entity.HasKey(e => e.IdGarden);
+
+                entity.ToTable("ExistingGarden");
+
+                entity.Property(e => e.IdGarden)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("idGarden");
+
+                entity.Property(e => e.IsActive).HasColumnName("isActive");
+            });
+
             modelBuilder.Entity<Garden>(entity =>
             {
                 entity.HasKey(e => e.IdGarden);

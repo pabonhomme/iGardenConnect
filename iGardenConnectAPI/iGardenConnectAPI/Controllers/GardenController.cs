@@ -94,7 +94,7 @@ namespace iGardenConnectAPI.Controllers
         public ActionResult Add(GardenVM gardenVM, int idUser)
         {
             var gardenDTO = gardenVM.ToDTO();
-
+            
             // Get the JWT token from the Authorization header
             var authorizationHeader = HttpContext.Request.Headers["Authorization"].ToString();
             var jwtToken = authorizationHeader.Replace("Bearer ", "");
@@ -176,6 +176,25 @@ namespace iGardenConnectAPI.Controllers
         /// <returns></returns>
 
         [HttpPut]
+        [Route("activate/{idGarden}/{active}")]
+        public bool ActivateGarden(string idGarden, int active)
+        {
+            var state = false;
+            if(active == 0 || active == 1)
+            {
+               state = _GardenService.ActivateGarden(idGarden, active);
+            }
+
+            return state;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idGarden"></param>
+        /// <param name="watered"></param>
+        /// <returns></returns>
+
+        [HttpPut]
         [Route("{idGarden}/{watered}")]
         public bool UpdateWateringState(string idGarden, int watered)
         {
@@ -184,7 +203,6 @@ namespace iGardenConnectAPI.Controllers
 
             return state;
         }
-
 
         #endregion
         #region DELETE
