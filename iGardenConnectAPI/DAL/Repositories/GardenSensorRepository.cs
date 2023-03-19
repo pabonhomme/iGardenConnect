@@ -118,7 +118,7 @@ namespace DAL.Repositories
                 
                 var entity = gardenSensorDTO.ToEntity();
                 entity.IdGarden = idGarden;
-                if(gardenSensorDTO.IdSensor == 7)
+                if(gardenSensorDTO.IdSensor == 7 || gardenSensorDTO.IdSensor == 6)
                 {
                     entity.State = value == "0" ? "OFF" :  "ON"; //update by Led State
                 }

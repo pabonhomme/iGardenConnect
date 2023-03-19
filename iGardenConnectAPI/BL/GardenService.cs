@@ -80,7 +80,7 @@ namespace BL
         public bool UpdateByWateringDuration(GardenDTO gardenDTO, int idSensor, int duration)
         {
             bool state = false;
-            var updateWaterPump = _gardenSensorService.UpdateByState(gardenDTO.IdGarden, idSensor, "ON");
+            var updateWaterPump = _gardenSensorService.UpdateByState(gardenDTO.IdGarden, idSensor, "OFF");
             var updateWatering = _gardenRepository.UpdateByWateringDuration(gardenDTO, idSensor, duration);
             if (updateWatering && updateWaterPump)
                 state = true;
@@ -90,7 +90,15 @@ namespace BL
 
         public bool UpdateWateringState(GardenDTO gardenDTO, int watered)
         {
-            return _gardenRepository.UpdateWateringState(gardenDTO, watered);
+            bool state = false;
+
+            var statePump = watered == 0 ? "OFF" : "ON";
+            var updateWaterPump = _gardenSensorService.UpdateByState(gardenDTO.IdGarden, 6, statePump);
+            var updateWatering =  _gardenRepository.UpdateWateringState(gardenDTO, watered);
+            if (updateWatering && updateWaterPump)
+                state = true;
+
+            return state;        
         }
 
         public bool Remove(GardenDTO gardenDTO)

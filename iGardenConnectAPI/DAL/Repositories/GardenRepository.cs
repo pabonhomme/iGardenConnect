@@ -165,7 +165,7 @@ namespace DAL.Repositories
                 var entity = gardenDTO.ToEntity();
                 entity.IdUser = g.IdUser; //get idUser
                 entity.WateringDuration = duration; 
-                entity.LastWatered = DateTime.Today; //update last watered
+                entity.LastWatered = DateTime.Now; //update last watered
                 entity.Watered = 0; //watered false
                 _dbcontext.Update(entity);
                 _dbcontext.SaveChanges();
