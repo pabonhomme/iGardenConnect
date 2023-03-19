@@ -151,7 +151,13 @@ namespace iGardenConnectAPI.Controllers
             return state;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idGarden">to get the garden</param>
+        /// <param name="idSensor">to get the gardenSensor and update its state</param>
+        /// <param name="duration">update duration</param>
+        /// <returns></returns>
         [HttpPut]
         [Route("{idGarden}/{idSensor}/{duration}")]
         public bool UpdateWateringDuration(string idGarden, int idSensor, int duration)
@@ -161,6 +167,24 @@ namespace iGardenConnectAPI.Controllers
 
             return state;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idGarden"></param>
+        /// <param name="watered"></param>
+        /// <returns></returns>
+
+        [HttpPut]
+        [Route("{idGarden}/{watered}")]
+        public bool UpdateWateringState(string idGarden, int watered)
+        {
+            var gardenDTO = _GardenService.GetByIdGarden(idGarden);
+            var state = _GardenService.UpdateWateringState(gardenDTO, watered);
+
+            return state;
+        }
+
 
         #endregion
         #region DELETE

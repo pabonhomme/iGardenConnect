@@ -5,6 +5,7 @@ using DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -114,9 +115,17 @@ namespace DAL.Repositories
         {
             try
             {
+                
                 var entity = gardenSensorDTO.ToEntity();
                 entity.IdGarden = idGarden;
-                entity.Value = value; //update 
+                if(gardenSensorDTO.IdSensor == 7)
+                {
+                    entity.State = value == "0" ? "OFF" :  "ON"; //update by Led State
+                }
+                else
+                {
+                    entity.Value = value.Trim(); //update by value sensor
+                }
                 _dbcontext.Update(entity);
                 _dbcontext.SaveChanges();
                 return true;

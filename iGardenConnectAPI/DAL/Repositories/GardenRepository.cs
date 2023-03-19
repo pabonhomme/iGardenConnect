@@ -167,6 +167,26 @@ namespace DAL.Repositories
 
             return false;
         }
+        public bool UpdateWateringState(GardenDTO gardenDTO, int watered)
+        {
+            try
+            {
+                Garden g = _dbcontext.Gardens.FirstOrDefault(g => g.IdGarden == gardenDTO.IdGarden);
+                var entity = gardenDTO.ToEntity();
+                entity.IdUser = g.IdUser; //get idUser
+                entity.Watered = (short?)watered; //watered false
+                _dbcontext.Update(entity);
+                _dbcontext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return false;
+        }
 
         #endregion
         public bool Remove(GardenDTO garden)
@@ -193,6 +213,7 @@ namespace DAL.Repositories
 
             return false;
         }
+
 
     }
 }

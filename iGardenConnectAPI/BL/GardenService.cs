@@ -72,18 +72,6 @@ namespace BL
         }
 
 
-        public bool Remove(GardenDTO gardenDTO)
-        {
-            var gardenSensorsDTO = _gardenSensorService.Get(gardenDTO.IdGarden);
-            var state = _gardenSensorService.RemoveGardenSensors(gardenSensorsDTO, gardenDTO.IdGarden);
-            var state2 =  _gardenRepository.Remove(gardenDTO);
-            if(state && state2)
-            {
-                return state;
-            }
-            return false;
-        }
-
         public bool UpdateByNamePlant(GardenDTO gardenDTO, string name, int idPlant)
         {
             return _gardenRepository.UpdateByNamePlant(gardenDTO, name, idPlant);
@@ -98,6 +86,23 @@ namespace BL
                 state = true;
 
             return state;
+        }
+
+        public bool UpdateWateringState(GardenDTO gardenDTO, int watered)
+        {
+            return _gardenRepository.UpdateWateringState(gardenDTO, watered);
+        }
+
+        public bool Remove(GardenDTO gardenDTO)
+        {
+            var gardenSensorsDTO = _gardenSensorService.Get(gardenDTO.IdGarden);
+            var state = _gardenSensorService.RemoveGardenSensors(gardenSensorsDTO, gardenDTO.IdGarden);
+            var state2 = _gardenRepository.Remove(gardenDTO);
+            if (state && state2)
+            {
+                return state;
+            }
+            return false;
         }
     }
 }
